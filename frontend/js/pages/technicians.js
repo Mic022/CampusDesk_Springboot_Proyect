@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (technicians.length === 0) {
       container.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px;">
+        <div class="empty-tech-state">
           No technicians currently registered in the system.
         </div>
       `;
@@ -58,14 +58,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
           </div>
 
-          <div style="margin-top: 16px;">
-            <a href="tickets.html" class="btn btn-secondary btn-sm" style="width: 100%;">
+          <div class="tech-card-action">
+            <a href="tickets.html" class="btn btn-secondary btn-sm w-100">
               Inspect Assigned Incidents
             </a>
           </div>
         </div>
       `;
     }).join('');
+
+    if (window.I18n) {
+      I18n.translatePage();
+    }
 
   } catch (err) {
     Toast.error('Load Error', err.message || 'Unable to retrieve technicians roster.');
