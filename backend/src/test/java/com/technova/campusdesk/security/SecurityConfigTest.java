@@ -17,7 +17,6 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,16 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.technova.campusdesk.entity.User;
 import com.technova.campusdesk.entity.enums.Role;
-import com.technova.campusdesk.exception.GlobalExceptionHandler;
 import com.technova.campusdesk.repository.UserRepository;
 
 @WebMvcTest(controllers = SecurityConfigTest.TestController.class)
-@Import({ SecurityConfig.class, JwtService.class, UserDetailsServiceImpl.class, JwtAuthenticationFilter.class,
-		RestAuthenticationEntryPoint.class, RestAccessDeniedHandler.class, GlobalExceptionHandler.class,
-		SecurityConfigTest.TestController.class })
-@TestPropertySource(properties = {
-		"app.jwt.secret=secreto-de-prueba-con-mas-de-32-caracteres",
-		"app.jwt.expiration-ms=3600000" })
+@WithJwtSecurity
+@Import(SecurityConfigTest.TestController.class)
 class SecurityConfigTest {
 
 	@Autowired
