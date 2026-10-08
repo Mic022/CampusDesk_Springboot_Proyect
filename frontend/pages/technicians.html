@@ -25,7 +25,7 @@
       </div>
       <nav class="sidebar-nav" id="sidebar-nav"></nav>
       <div class="sidebar-footer">
-        <a href="#" class="nav-link" id="sidebar-logout-btn" style="color: #fca5a5;"></a>
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
       </div>
     </aside>
 
@@ -36,11 +36,15 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <div class="header-title-box">
-            <h1>Support Technicians</h1>
+            <h1 data-i18n="nav_technicians">Support Technicians</h1>
             <p>Field specialist availability, assignments, and workload distribution</p>
           </div>
         </div>
         <div class="header-right">
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
           <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
         </div>
       </header>
@@ -49,7 +53,7 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title" id="tech-header-count">Active Technical Staff</h3>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Real-time capacity tracking</span>
+            <span class="card-header-badge">Real-time capacity tracking</span>
           </div>
           <div class="card-body">
             <div id="technicians-grid" class="technicians-grid">
@@ -61,6 +65,8 @@
     </div>
   </div>
 
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
   <script src="../js/components.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/auth.js"></script>
