@@ -29,7 +29,7 @@
       <nav class="sidebar-nav" id="sidebar-nav"></nav>
 
       <div class="sidebar-footer">
-        <a href="#" class="nav-link" id="sidebar-logout-btn" style="color: #fca5a5;"></a>
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
       </div>
     </aside>
 
@@ -41,13 +41,17 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <div class="header-title-box">
-            <h1 id="tickets-view-title">Incident Desk</h1>
+            <h1 id="tickets-view-title" data-i18n="nav_tickets">Incident Desk</h1>
             <p id="tickets-view-desc">Monitor, filter, and track technical issue lifecycles</p>
           </div>
         </div>
 
         <div class="header-right">
-          <a href="create-ticket.html" class="btn btn-primary" id="top-create-btn">+ New Request</a>
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
+          <a href="create-ticket.html" class="btn btn-primary" id="top-create-btn" data-i18n="new_request">+ New Request</a>
           <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
         </div>
       </header>
@@ -61,12 +65,12 @@
               <span class="search-icon-inside">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               </span>
-              <input type="text" id="filter-search" class="form-control" placeholder="Search by ID or title...">
+              <input type="text" id="filter-search" class="form-control" placeholder="Search by ID or title..." data-i18n-placeholder="search_placeholder">
             </div>
 
             <!-- Status Filter -->
             <select id="filter-status" class="form-select filter-select">
-              <option value="">All Statuses</option>
+              <option value="" data-i18n="all_statuses">All Statuses</option>
               <option value="OPEN">OPEN</option>
               <option value="ASSIGNED">ASSIGNED</option>
               <option value="IN_PROGRESS">IN PROGRESS</option>
@@ -76,7 +80,7 @@
 
             <!-- Priority Filter -->
             <select id="filter-priority" class="form-select filter-select">
-              <option value="">All Priorities</option>
+              <option value="" data-i18n="all_priorities">All Priorities</option>
               <option value="LOW">LOW</option>
               <option value="MEDIUM">MEDIUM</option>
               <option value="HIGH">HIGH</option>
@@ -85,7 +89,7 @@
 
             <!-- Category Filter -->
             <select id="filter-category" class="form-select filter-select">
-              <option value="">All Categories</option>
+              <option value="" data-i18n="all_categories">All Categories</option>
               <option value="HARDWARE">HARDWARE</option>
               <option value="SOFTWARE">SOFTWARE</option>
               <option value="NETWORK">NETWORK</option>
@@ -95,7 +99,7 @@
           </div>
 
           <div>
-            <button id="btn-reset-filters" class="btn btn-secondary">Reset Filters</button>
+            <button id="btn-reset-filters" class="btn btn-secondary" data-i18n="reset_filters">Reset Filters</button>
           </div>
         </div>
 
@@ -103,12 +107,12 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title" id="tickets-count-badge">Loading incidents...</h3>
-            <span style="font-size: 0.82rem; color: var(--text-muted);">Real-time tracking</span>
+            <span class="card-header-badge">Real-time tracking</span>
           </div>
 
-          <div class="card-body" style="padding: 0;">
+          <div class="card-body card-body-flush">
             <!-- Loading skeleton -->
-            <div id="tickets-skeleton" style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+            <div id="tickets-skeleton" class="d-flex flex-column gap-12" style="padding: 24px;">
               <div class="skeleton" style="height: 48px;"></div>
               <div class="skeleton" style="height: 48px;"></div>
               <div class="skeleton" style="height: 48px;"></div>
@@ -142,7 +146,7 @@
               </div>
               <div class="empty-state-title">No matching tickets found</div>
               <div class="empty-state-desc">Try clearing your search query or adjusting your filters to locate the incident.</div>
-              <button id="empty-clear-btn" class="btn btn-secondary">Clear Filters</button>
+              <button id="empty-clear-btn" class="btn btn-secondary" data-i18n="reset_filters">Clear Filters</button>
             </div>
           </div>
         </div>
@@ -150,6 +154,8 @@
     </div>
   </div>
 
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
   <script src="../js/components.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/auth.js"></script>
