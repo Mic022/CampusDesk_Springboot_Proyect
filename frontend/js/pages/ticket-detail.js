@@ -309,7 +309,7 @@ function renderRoleActions(ticket) {
       actionsHtml += `
         <div class="d-flex flex-column gap-12">
           <p class="activity-meta">The technician has reported this issue as resolved. Please verify and confirm closure.</p>
-          <button id="btn-close-ticket" class="btn btn-secondary w-100" style="background-color: var(--status-closed); color: #ffffff;">
+          <button id="btn-close-ticket" class="btn btn-secondary btn-close-ticket w-100">
             Confirm Resolution & Close (CLOSED)
           </button>
         </div>
