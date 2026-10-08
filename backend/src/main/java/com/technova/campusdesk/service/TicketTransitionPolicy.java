@@ -13,44 +13,44 @@ public class TicketTransitionPolicy {
         }
 
         switch (current) {
-            case ABIERTA -> {
-                if (next == TicketStatus.ASIGNADA) {
+            case OPEN -> {
+                if (next == TicketStatus.ASSIGNED) {
                     if (userRole != Role.ADMIN) {
-                        throw new ForbiddenException("Solo un ADMIN puede asignar un ticket ABIERTO.");
+                        throw new ForbiddenException("Solo un ADMIN puede asignar un ticket OPEN.");
                     }
                 } else {
-                    throw new BusinessRuleException("Desde ABIERTA solo se puede pasar a ASIGNADA.");
+                    throw new BusinessRuleException("Desde OPEN solo se puede pasar a ASSIGNED.");
                 }
             }
-            case ASIGNADA -> {
-                if (next == TicketStatus.EN_PROCESO) {
+            case ASSIGNED -> {
+                if (next == TicketStatus.IN_PROGRESS) {
                     if (userRole != Role.TECHNICIAN) {
-                        throw new ForbiddenException("Solo un TÉCNICO puede iniciar el proceso de un ticket ASIGNADO.");
+                        throw new ForbiddenException("Solo un TÉCNICO puede iniciar el proceso de un ticket ASSIGNED.");
                     }
                 } else {
-                    throw new BusinessRuleException("Desde ASIGNADA solo se puede pasar a EN_PROCESO.");
+                    throw new BusinessRuleException("Desde ASSIGNED solo se puede pasar a IN_PROGRESS.");
                 }
             }
-            case EN_PROCESO -> {
-                if (next == TicketStatus.RESUELTA) {
+            case IN_PROGRESS -> {
+                if (next == TicketStatus.RESOLVED) {
                     if (userRole != Role.TECHNICIAN) {
-                        throw new ForbiddenException("Solo un TÉCNICO puede marcar un ticket como RESUELTO.");
+                        throw new ForbiddenException("Solo un TÉCNICO puede marcar un ticket como RESOLVED.");
                     }
                 } else {
-                    throw new BusinessRuleException("Desde EN_PROCESO solo se puede pasar a RESUELTA.");
+                    throw new BusinessRuleException("Desde IN_PROGRESS solo se puede pasar a RESOLVED.");
                 }
             }
-            case RESUELTA -> {
-                if (next == TicketStatus.CERRADA) {
+            case RESOLVED -> {
+                if (next == TicketStatus.CLOSED) {
                     if (userRole != Role.USER && userRole != Role.ADMIN) {
-                        throw new ForbiddenException("Solo el SOLICITANTE o un ADMIN pueden cerrar un ticket RESUELTO.");
+                        throw new ForbiddenException("Solo el SOLICITANTE o un ADMIN pueden cerrar un ticket RESOLVED.");
                     }
                 } else {
-                    throw new BusinessRuleException("Desde RESUELTA solo se puede pasar a CERRADA.");
+                    throw new BusinessRuleException("Desde RESOLVED solo se puede pasar a CLOSED.");
                 }
             }
-            case CERRADA -> {
-                throw new BusinessRuleException("Un ticket CERRADO no puede cambiar de estado.");
+            case CLOSED -> {
+                throw new BusinessRuleException("Un ticket CLOSED no puede cambiar de estado.");
             }
             default -> throw new BusinessRuleException("Transición de estado no reconocida.");
         }

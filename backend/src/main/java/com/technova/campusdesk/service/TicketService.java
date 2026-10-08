@@ -23,13 +23,10 @@ public class TicketService {
         ticket.setDescription(request.description());
         ticket.setCategory(request.category());
         ticket.setPriority(request.priority());
-        ticket.setStatus(TicketStatus.ABIERTA); // Regla de negocio: siempre inicia ABIERTA
+        ticket.setStatus(TicketStatus.OPEN); // <-- CAMBIO: Usar OPEN en lugar de ABIERTA
         ticket.setRequester(currentUser);
-        // technician remains null until assigned
 
         Ticket savedTicket = ticketRepository.save(ticket);
-
-        // TODO Step 7: Connect StatusHistoryService.record(savedTicket, null, TicketStatus.ABIERTA, currentUser);
 
         return mapToResponse(savedTicket);
     }
