@@ -350,3 +350,15 @@
 .kpi-closed { color: var(--status-closed) !important; }
 .kpi-critical { color: var(--priority-critical) !important; }
 
+/* Legend & Priority Colors */
+.legend-color-open { background-color: var(--status-open); }
+.legend-color-assigned { background-color: var(--status-assigned); }
+.legend-color-in-progress { background-color: var(--status-in-progress); }
+.legend-color-resolved { background-color: var(--status-resolved); }
+.legend-color-closed { background-color: var(--status-closed); }
+
+.bg-priority-low { background-color: var(--priority-low); }
+.bg-priority-medium { background-color: var(--priority-medium); }
+.bg-priority-high { background-color: var(--priority-high); }
+.bg-priority-critical { background-color: var(--priority-critical); }
+
