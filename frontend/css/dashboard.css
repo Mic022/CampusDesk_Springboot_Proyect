@@ -308,3 +308,45 @@
   font-size: 0.75rem;
   color: var(--text-muted);
 }
+
+/* Category Statistics Grid */
+.category-breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.category-stat-card {
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+}
+
+.category-stat-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.category-stat-count {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 6px 0;
+}
+
+.category-stat-sub {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* KPI Status Colors */
+.kpi-open { color: var(--status-open) !important; }
+.kpi-assigned { color: var(--status-assigned) !important; }
+.kpi-in-progress { color: var(--status-in-progress) !important; }
+.kpi-resolved { color: var(--status-resolved) !important; }
+.kpi-closed { color: var(--status-closed) !important; }
+.kpi-critical { color: var(--priority-critical) !important; }
+
