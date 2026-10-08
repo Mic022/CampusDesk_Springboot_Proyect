@@ -1,7 +1,7 @@
 /**
  * CampusDesk Administration Controller
  * Client: TechNova Solutions
- * Manages administrative tabs, technician capacity oversight, and corporate user directories.
+ * Manages administrative tabs, technician capacity oversight, and corporate user directories with i18n.
  */
 'use strict';
 
@@ -52,6 +52,10 @@ async function loadAdminData() {
     renderTechniciansTab(technicians, tickets);
     renderUsersTab(users);
 
+    if (typeof I18n !== 'undefined') {
+      I18n.translateDOM();
+    }
+
   } catch (err) {
     Toast.error('Load Error', err.message || 'Unable to populate administration consoles.');
   }
@@ -68,16 +72,16 @@ function renderOverviewTab(summary, tickets) {
       <div class="kpi-value">${summary.total || 0}</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-card-header"><span class="kpi-label">Open Awaiting Triage</span><div class="kpi-icon-wrapper" style="color: var(--status-open);">${Icons.clock}</div></div>
-      <div class="kpi-value" style="color: var(--status-open);">${summary.open || 0}</div>
+      <div class="kpi-card-header"><span class="kpi-label">Open Awaiting Triage</span><div class="kpi-icon-wrapper icon-open">${Icons.clock}</div></div>
+      <div class="kpi-value val-open">${summary.open || 0}</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-card-header"><span class="kpi-label">Active Work</span><div class="kpi-icon-wrapper" style="color: var(--status-in-progress);">${Icons.clock}</div></div>
-      <div class="kpi-value" style="color: var(--status-in-progress);">${summary.inProgress || 0}</div>
+      <div class="kpi-card-header"><span class="kpi-label">Active Work</span><div class="kpi-icon-wrapper icon-progress">${Icons.clock}</div></div>
+      <div class="kpi-value val-progress">${summary.inProgress || 0}</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-card-header"><span class="kpi-label">Resolved</span><div class="kpi-icon-wrapper" style="color: var(--status-resolved);">${Icons.check}</div></div>
-      <div class="kpi-value" style="color: var(--status-resolved);">${summary.resolved || 0}</div>
+      <div class="kpi-card-header"><span class="kpi-label">Resolved</span><div class="kpi-icon-wrapper icon-resolved">${Icons.check}</div></div>
+      <div class="kpi-value val-resolved">${summary.resolved || 0}</div>
     </div>
   `;
 
@@ -87,7 +91,7 @@ function renderOverviewTab(summary, tickets) {
   if (unassigned.length === 0) {
     unassignedTable.innerHTML = `
       <tr>
-        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">
+        <td colspan="6" class="empty-table-cell">
           All open tickets have been assigned to designated technicians.
         </td>
       </tr>
@@ -114,7 +118,7 @@ function renderTechniciansTab(technicians, tickets) {
   const container = document.getElementById('technicians-cards-container');
 
   if (technicians.length === 0) {
-    container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 32px;">No active technicians registered in the directory.</div>`;
+    container.innerHTML = `<div class="empty-state-desc text-center">No active technicians registered in the directory.</div>`;
     return;
   }
 
@@ -146,8 +150,8 @@ function renderTechniciansTab(technicians, tickets) {
           </div>
         </div>
 
-        <div style="margin-top: 14px; display: flex; justify-content: flex-end;">
-          <a href="tickets.html" class="btn btn-secondary btn-sm" style="width: 100%;">View Queue</a>
+        <div class="card-footer-action">
+          <a href="tickets.html" class="btn btn-secondary btn-sm w-100">View Queue</a>
         </div>
       </div>
     `;
@@ -164,15 +168,15 @@ function renderUsersTab(users) {
   countBadge.textContent = `Corporate User Directory (${users.length})`;
 
   tbody.innerHTML = users.map(u => {
-    const roleColor = u.role === 'ADMIN' ? 'var(--status-assigned)' : (u.role === 'TECHNICIAN' ? 'var(--color-primary)' : 'var(--text-secondary)');
+    const roleBadgeClass = u.role === 'ADMIN' ? 'badge-status-assigned' : (u.role === 'TECHNICIAN' ? 'badge-priority-medium' : 'badge-status-closed');
 
     return `
       <tr>
-        <td data-label="ID" style="font-family: monospace; font-weight: 700;">#USR-${String(u.id).padStart(3, '0')}</td>
+        <td data-label="ID" class="ticket-id-tag">#USR-${String(u.id).padStart(3, '0')}</td>
         <td data-label="Full Name"><strong>${u.fullName}</strong></td>
         <td data-label="Corporate Email">${u.email}</td>
         <td data-label="Role">
-          <span class="badge" style="background: rgba(0,0,0,0.06); color: ${roleColor}; font-weight: 700;">${u.role}</span>
+          <span class="badge ${roleBadgeClass}">${u.role}</span>
         </td>
         <td data-label="Account Status">
           <span class="badge badge-status-resolved"><span class="badge-dot"></span>ACTIVE</span>
