@@ -281,3 +281,10 @@
   font-size: 0.8rem;
   color: var(--text-secondary);
 }
+
+/* User Confirmation and Closure Button */
+.btn-close-ticket {
+  background-color: var(--status-closed);
+  color: #ffffff;
+}
+
