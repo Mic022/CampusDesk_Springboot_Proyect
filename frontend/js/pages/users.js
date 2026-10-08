@@ -40,7 +40,7 @@ function filterAndRenderUsers() {
   if (filtered.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 32px;">
+        <td colspan="5" class="empty-table-cell">
           No matching corporate accounts found.
         </td>
       </tr>
@@ -49,15 +49,16 @@ function filterAndRenderUsers() {
   }
 
   tbody.innerHTML = filtered.map(u => {
-    const roleColor = u.role === 'ADMIN' ? 'var(--status-assigned)' : (u.role === 'TECHNICIAN' ? 'var(--color-primary)' : 'var(--text-secondary)');
+    const role = (u.role || 'EMPLOYEE').toUpperCase();
+    const roleBadgeClass = `badge-role-${role.toLowerCase()}`;
 
     return `
       <tr>
-        <td data-label="Account ID" style="font-family: monospace; font-weight: 700;">#USR-${String(u.id).padStart(3, '0')}</td>
+        <td data-label="Account ID" class="monospace-id">#USR-${String(u.id).padStart(3, '0')}</td>
         <td data-label="Full Name"><strong>${u.fullName}</strong></td>
         <td data-label="Corporate Email">${u.email}</td>
         <td data-label="Role">
-          <span class="badge" style="background: rgba(0,0,0,0.06); color: ${roleColor}; font-weight: 700;">${u.role}</span>
+          <span class="badge ${roleBadgeClass}">${role}</span>
         </td>
         <td data-label="Status">
           <span class="badge badge-status-resolved"><span class="badge-dot"></span>ACTIVE</span>
@@ -65,4 +66,8 @@ function filterAndRenderUsers() {
       </tr>
     `;
   }).join('');
+
+  if (window.I18n) {
+    I18n.translatePage();
+  }
 }
