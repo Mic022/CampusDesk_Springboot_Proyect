@@ -27,6 +27,7 @@
 .kpi-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+  border-color: var(--border-focus);
 }
 
 .kpi-card-header {
@@ -75,6 +76,65 @@
 .trend-neutral { color: var(--text-muted); }
 .trend-warning { color: var(--priority-high); }
 
+/* Semantic KPI status accents */
+.icon-open, .val-open { color: var(--status-open); }
+.icon-assigned, .val-assigned { color: var(--status-assigned); }
+.icon-progress, .val-progress { color: var(--status-in-progress); }
+.icon-resolved, .val-resolved { color: var(--status-resolved); }
+.icon-closed, .val-closed { color: var(--status-closed); }
+
+/* Header badges and card utilities */
+.card-header-badge {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.card-body-flush {
+  padding: 0;
+}
+
+.text-unassigned {
+  color: var(--priority-high);
+  font-weight: 600;
+}
+
+/* User Callout Banner */
+.user-banner-cta {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  border-radius: var(--radius-md);
+  padding: 24px 28px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.user-banner-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.user-banner-sub {
+  font-size: 0.92rem;
+  color: #bfdbfe;
+}
+
+.btn-banner {
+  background: #ffffff;
+  color: #1e40af;
+  font-weight: 700;
+}
+
+.btn-banner:hover {
+  background: #f1f5f9;
+  color: #1d4ed8;
+}
+
 /* Dashboard multi-column layout */
 .dashboard-grid-two-col {
   display: grid;
@@ -106,6 +166,10 @@
   justify-content: center;
 }
 
+.chart-donut-svg {
+  transform: rotate(-90deg);
+}
+
 .chart-legend {
   display: flex;
   flex-wrap: wrap;
@@ -125,6 +189,33 @@
   width: 10px;
   height: 10px;
   border-radius: 2px;
+}
+
+.chart-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 10px 0;
+}
+
+.chart-bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.chart-bar-track {
+  height: 10px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.chart-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
 }
 
 /* Activity feed widget */
@@ -191,6 +282,7 @@
   padding: 10px 14px;
   border-radius: var(--radius-sm);
   background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
 }
 
 .tech-roster-info {
@@ -204,4 +296,15 @@
   height: 8px;
   border-radius: 50%;
   background-color: var(--status-resolved);
+}
+
+.tech-roster-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.tech-roster-email {
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
