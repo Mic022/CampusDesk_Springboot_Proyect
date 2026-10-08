@@ -790,6 +790,11 @@ a:hover {
   display: none;
 }
 
+.form-error-msg.active {
+  display: block;
+}
+
+
 /* Tables */
 .table-responsive {
   width: 100%;
