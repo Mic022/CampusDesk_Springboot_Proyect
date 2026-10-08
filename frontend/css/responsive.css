@@ -175,4 +175,16 @@
   .modal-footer {
     flex-direction: column;
   }
+
+  .notifications-panel {
+    right: -60px;
+    width: 310px;
+    max-width: calc(100vw - 32px);
+  }
+
+  .auth-lang-floating {
+    top: 12px;
+    right: 12px;
+  }
 }
+
