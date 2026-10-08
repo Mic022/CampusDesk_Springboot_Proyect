@@ -2,7 +2,7 @@
  * CampusDesk Ticket Detail Controller
  * Client: TechNova Solutions
  * Controls incident inspection, lifecycle step progression, comments thread,
- * technician assignment dialogs, and immutable audit logs.
+ * technician assignment dialogs, immutable audit logs, and multi-language support.
  */
 'use strict';
 
@@ -59,6 +59,10 @@ async function loadTicketDetails() {
     skeleton.style.display = 'none';
     container.style.display = 'block';
 
+    if (typeof I18n !== 'undefined') {
+      I18n.translateDOM();
+    }
+
   } catch (err) {
     skeleton.style.display = 'none';
     Toast.error('Error Loading Ticket', err.message || 'Unable to fetch incident details.');
@@ -83,7 +87,7 @@ function renderTicketOverview(ticket) {
   document.getElementById('meta-requester-name').textContent = ticket.requester ? ticket.requester.fullName : 'Unknown Requester';
   document.getElementById('meta-technician-name').innerHTML = ticket.technician
     ? `<strong>${ticket.technician.fullName}</strong>`
-    : '<span style="color: var(--priority-high); font-weight: 600;">Unassigned</span>';
+    : '<span class="text-unassigned">Unassigned</span>';
   document.getElementById('meta-created-at').textContent = formatDate(ticket.createdAt);
   document.getElementById('meta-updated-at').textContent = formatDate(ticket.updatedAt);
   document.getElementById('meta-status-badge').innerHTML = getStatusBadge(ticket.status);
@@ -141,7 +145,7 @@ function renderComments(comments, status) {
 
   if (comments.length === 0) {
     thread.innerHTML = `
-      <div style="font-size: 0.88rem; color: var(--text-muted); text-align: center; padding: 24px 0;">
+      <div class="empty-state-desc text-center">
         No discussion notes posted yet. Add a comment below to start technical triage.
       </div>
     `;
@@ -157,11 +161,11 @@ function renderComments(comments, status) {
     return `
       <div class="comment-card ${roleCss}">
         <div class="comment-avatar">${initials}</div>
-        <div style="flex: 1;">
+        <div class="w-100">
           <div class="comment-header-row">
             <div class="comment-author-name">
               <span>${authorName}</span>
-              <span class="badge" style="font-size: 0.68rem; padding: 2px 6px; background: rgba(0,0,0,0.06);">${role}</span>
+              <span class="badge badge-priority-medium">${role}</span>
             </div>
             <div class="comment-timestamp">${formatDate(c.createdAt)}</div>
           </div>
@@ -219,7 +223,7 @@ function renderAuditHistory(history) {
 
   if (history.length === 0) {
     timeline.innerHTML = `
-      <div style="font-size: 0.85rem; color: var(--text-muted); padding: 12px 0;">
+      <div class="empty-state-desc">
         Initial intake record created with status OPEN.
       </div>
     `;
@@ -251,9 +255,9 @@ function renderRoleActions(ticket) {
 
   if (ticket.status === 'CLOSED') {
     panel.innerHTML = `
-      <div style="text-align: center; padding: 10px;">
-        <span class="badge badge-status-closed" style="margin-bottom: 8px;">CLOSED</span>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">This incident is archived. No further workflow actions can be executed.</p>
+      <div class="text-center">
+        <span class="badge badge-status-closed">CLOSED</span>
+        <p class="empty-state-desc">This incident is archived. No further workflow actions can be executed.</p>
       </div>
     `;
     return;
@@ -265,11 +269,11 @@ function renderRoleActions(ticket) {
   if (user.role === 'ADMIN') {
     const isAssigned = !!ticket.technician;
     actionsHtml += `
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-        <p style="font-size: 0.88rem; color: var(--text-secondary);">
+      <div class="d-flex flex-column gap-12">
+        <p class="activity-meta">
           ${isAssigned ? 'Reassign this incident to another qualified technician.' : 'Assign a designated specialist to triage and resolve this ticket.'}
         </p>
-        <button id="btn-assign-technician" class="btn btn-primary" style="width: 100%;">
+        <button id="btn-assign-technician" class="btn btn-primary w-100">
           ${isAssigned ? 'Reassign Technician' : 'Assign Technician'}
         </button>
       </div>
@@ -280,18 +284,18 @@ function renderRoleActions(ticket) {
   if (user.role === 'TECHNICIAN' && ticket.technician && ticket.technician.id === user.id) {
     if (ticket.status === 'ASSIGNED') {
       actionsHtml += `
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <p style="font-size: 0.88rem; color: var(--text-secondary);">Begin active diagnostic investigation and troubleshooting.</p>
-          <button id="btn-start-progress" class="btn btn-primary" style="width: 100%;">
+        <div class="d-flex flex-column gap-12">
+          <p class="activity-meta">Begin active diagnostic investigation and troubleshooting.</p>
+          <button id="btn-start-progress" class="btn btn-primary w-100">
             Start Working (IN PROGRESS)
           </button>
         </div>
       `;
     } else if (ticket.status === 'IN_PROGRESS') {
       actionsHtml += `
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <p style="font-size: 0.88rem; color: var(--text-secondary);">Mark this ticket as resolved and await requester verification.</p>
-          <button id="btn-resolve-ticket" class="btn btn-primary" style="background-color: var(--status-resolved); width: 100%;">
+        <div class="d-flex flex-column gap-12">
+          <p class="activity-meta">Mark this ticket as resolved and await requester verification.</p>
+          <button id="btn-resolve-ticket" class="btn btn-primary w-100" style="background-color: var(--status-resolved);">
             Mark as Resolved (RESOLVED)
           </button>
         </div>
@@ -303,24 +307,24 @@ function renderRoleActions(ticket) {
   if (user.role === 'USER' && ticket.requester && ticket.requester.id === user.id) {
     if (ticket.status === 'RESOLVED') {
       actionsHtml += `
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <p style="font-size: 0.88rem; color: var(--text-secondary);">The technician has reported this issue as resolved. Please verify and confirm closure.</p>
-          <button id="btn-close-ticket" class="btn btn-primary" style="background-color: var(--status-closed); width: 100%;">
+        <div class="d-flex flex-column gap-12">
+          <p class="activity-meta">The technician has reported this issue as resolved. Please verify and confirm closure.</p>
+          <button id="btn-close-ticket" class="btn btn-secondary w-100" style="background-color: var(--status-closed); color: #ffffff;">
             Confirm Resolution & Close (CLOSED)
           </button>
         </div>
       `;
     } else if (ticket.status === 'OPEN' && !ticket.technician) {
       actionsHtml += `
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <p style="font-size: 0.88rem; color: var(--text-muted);">Your ticket is awaiting assignment by an administrator.</p>
+        <div class="d-flex flex-column gap-12">
+          <p class="empty-state-desc">Your ticket is awaiting assignment by an administrator.</p>
         </div>
       `;
     }
   }
 
   panel.innerHTML = actionsHtml || `
-    <div style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 10px;">
+    <div class="empty-state-desc text-center">
       No operational actions required from your role at this stage.
     </div>
   `;
@@ -353,7 +357,7 @@ async function openAssignmentModal() {
     `).join('');
 
     const modalContent = `
-      <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px;">
+      <p class="activity-meta" style="margin-bottom: 16px;">
         Select an authorized technician to take ownership of incident <strong>#TK-${String(currentTicket.id).padStart(4, '0')}</strong>:
       </p>
       <div class="form-group">
