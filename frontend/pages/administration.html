@@ -29,7 +29,7 @@
       <nav class="sidebar-nav" id="sidebar-nav"></nav>
 
       <div class="sidebar-footer">
-        <a href="#" class="nav-link" id="sidebar-logout-btn" style="color: #fca5a5;"></a>
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
       </div>
     </aside>
 
@@ -41,12 +41,16 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <div class="header-title-box">
-            <h1>Administration Center</h1>
+            <h1 data-i18n="nav_admin">Administration Center</h1>
             <p>Operational workforce oversight, technician capacity, and user directory</p>
           </div>
         </div>
 
         <div class="header-right">
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
           <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
         </div>
       </header>
@@ -79,7 +83,7 @@
               <h3 class="card-title">Unassigned Incidents Awaiting Triage</h3>
               <a href="tickets.html?status=OPEN" class="btn btn-secondary btn-sm">View Intake Desk</a>
             </div>
-            <div class="card-body" style="padding: 0;">
+            <div class="card-body card-body-flush">
               <div class="table-responsive">
                 <table class="data-table responsive-cards-table">
                   <thead>
@@ -103,10 +107,10 @@
 
         <!-- Tab 2: Technicians Roster -->
         <div class="admin-tab-content" id="tab-technicians">
-          <div class="card-header" style="background: none; border: none; padding: 0 0 20px 0;">
+          <div class="card-header card-body-flush" style="background: none; border: none; margin-bottom: 20px;">
             <div>
               <h3 class="card-title" style="font-size: 1.25rem;">Active Field & Support Technicians</h3>
-              <p style="font-size: 0.85rem; color: var(--text-muted);">Monitor individual workloads and dispatch pending tickets</p>
+              <p class="activity-meta">Monitor individual workloads and dispatch pending tickets</p>
             </div>
           </div>
           <div class="technicians-grid" id="technicians-cards-container">
@@ -119,9 +123,9 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title" id="users-count-badge">Corporate User Directory</h3>
-              <span style="font-size: 0.82rem; color: var(--text-muted);">Protected accounts</span>
+              <span class="card-header-badge">Protected accounts</span>
             </div>
-            <div class="card-body" style="padding: 0;">
+            <div class="card-body card-body-flush">
               <div class="table-responsive">
                 <table class="data-table responsive-cards-table">
                   <thead>
@@ -146,6 +150,8 @@
     </div>
   </div>
 
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
   <script src="../js/components.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/auth.js"></script>
