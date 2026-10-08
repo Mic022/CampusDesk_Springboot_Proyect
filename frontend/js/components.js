@@ -178,3 +178,14 @@ function dismissSplash() {
     }, 400);
   }
 }
+
+// Automatically load animations engine if not already present
+(function loadAnimationsEngine() {
+  if (typeof Animations === 'undefined' && !document.querySelector('script[src*="animations.js"]')) {
+    const script = document.createElement('script');
+    const isInPages = window.location.pathname.includes('/pages/');
+    script.src = isInPages ? '../js/animations.js' : 'js/animations.js';
+    document.head.appendChild(script);
+  }
+})();
+

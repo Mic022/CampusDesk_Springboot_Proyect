@@ -77,14 +77,14 @@
   width: 48px;
   height: 48px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, #047857, #14b8a6);
+  background: linear-gradient(135deg, #7e22ce, #c084fc);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.35);
+  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.45);
 }
 
 .tech-info h4 {

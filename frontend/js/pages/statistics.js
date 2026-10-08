@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       I18n.translatePage();
     }
 
+    if (typeof Animations !== 'undefined') {
+      Animations.animateNumbers();
+    }
+
   } catch (err) {
     Toast.error('Analytics Error', err.message || 'Unable to load statistics.');
   }
@@ -108,7 +112,7 @@ function renderDonutChart(summary) {
     <div class="chart-container">
       <div class="chart-svg-wrapper">
         <svg class="chart-donut-svg" width="200" height="200" viewBox="0 0 160 160">
-          <circle cx="80" cy="80" r="${radius}" fill="none" stroke="rgba(45, 212, 191, 0.12)" stroke-width="22" />
+          <circle cx="80" cy="80" r="${radius}" fill="none" stroke="rgba(168, 85, 247, 0.14)" stroke-width="22" />
           <circle cx="80" cy="80" r="${radius}" fill="none" stroke="var(--status-open)" stroke-width="22" stroke-dasharray="${dashOpen}" stroke-dashoffset="${offsetOpen}" />
           <circle cx="80" cy="80" r="${radius}" fill="none" stroke="var(--status-assigned)" stroke-width="22" stroke-dasharray="${dashAssigned}" stroke-dashoffset="${offsetAssigned}" />
           <circle cx="80" cy="80" r="${radius}" fill="none" stroke="var(--status-in-progress)" stroke-width="22" stroke-dasharray="${dashProg}" stroke-dashoffset="${offsetProg}" />

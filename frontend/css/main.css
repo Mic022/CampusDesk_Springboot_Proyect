@@ -6,39 +6,42 @@
  */
 
 :root {
-  /* Brand color palette - Aquamarine, Bold Forest/Emerald Greens & Crisp Whites */
-  --color-primary: #0d9488;
-  --color-primary-hover: #0f766e;
-  --color-primary-light: rgba(45, 212, 191, 0.16);
-  --color-primary-dark: #011712;
+  /* Brand color palette - Deep Purple, Electric Violet & Obsidian Black */
+  --color-primary: #9333ea;
+  --color-primary-hover: #a855f7;
+  --color-primary-light: rgba(168, 85, 247, 0.18);
+  --color-primary-dark: #581c87;
   
-  --color-secondary: #052e24;
-  --color-accent: #2dd4bf;
-  --color-accent-soft: rgba(45, 212, 191, 0.18);
+  --color-secondary: #140a29;
+  --color-accent: #c084fc;
+  --color-accent-soft: rgba(192, 132, 252, 0.22);
+  --color-glow: 0 0 24px rgba(168, 85, 247, 0.45);
+  --color-glow-lg: 0 0 45px rgba(168, 85, 247, 0.6);
 
-  /* Neutrals & background tiers - Rich Emerald, Deep Pine & Seafoam Greens */
-  --bg-main: #021f18;
-  --bg-surface: #052e24;
-  --bg-subtle: #0a3d31;
-  --bg-card: #07362b;
-  --bg-sidebar: #011712;
-  --bg-sidebar-hover: #0a3d31;
+  /* Neutrals & background tiers - Obsidian Black & Deep Violet */
+  --bg-main: #07040d;
+  --bg-surface: #0f091d;
+  --bg-subtle: #190f30;
+  --bg-card: #130c26;
+  --bg-sidebar: #090514;
+  --bg-sidebar-hover: #1c1138;
 
-  /* Typography color scale - Crisp Whites & Luminous Seafoam */
+  /* Typography color scale - Crisp Brilliant Whites & Pale Lavender */
   --text-main: #ffffff;
-  --text-secondary: #e6fcf5;
-  --text-muted: #99f6e4;
+  --text-secondary: #ebd5ff;
+  --text-muted: #c084fc;
   --text-white: #ffffff;
-  --border-color: #135243;
-  --border-focus: #2dd4bf;
+  --border-color: #2e1a4d;
+  --border-focus: #c084fc;
+  --border-glow: rgba(168, 85, 247, 0.45);
 
-  /* Semantic status colors tuned for emerald & aquamarine harmony */
-  --status-open: #2dd4bf;
-  --status-open-bg: rgba(45, 212, 191, 0.18);
-  --status-assigned: #38bdf8;
-  --status-assigned-bg: rgba(56, 189, 248, 0.18);
-  --status-in-progress: #facc15;
-  --status-in-progress-bg: rgba(250, 204, 21, 0.18);
+  /* Semantic status colors tuned for purple & obsidian harmony */
+  --status-open: #c084fc;
+  --status-open-bg: rgba(192, 132, 252, 0.18);
+  --status-assigned: #60a5fa;
+  --status-assigned-bg: rgba(96, 165, 250, 0.18);
+  --status-in-progress: #fbbf24;
+  --status-in-progress-bg: rgba(251, 191, 36, 0.18);
   --status-resolved: #34d399;
   --status-resolved-bg: rgba(52, 211, 153, 0.18);
   --status-closed: #94a3b8;
@@ -47,12 +50,12 @@
   /* Priority level colors */
   --priority-low: #34d399;
   --priority-low-bg: rgba(52, 211, 153, 0.18);
-  --priority-medium: #2dd4bf;
-  --priority-medium-bg: rgba(45, 212, 191, 0.18);
+  --priority-medium: #c084fc;
+  --priority-medium-bg: rgba(192, 132, 252, 0.18);
   --priority-high: #fb923c;
   --priority-high-bg: rgba(251, 146, 60, 0.18);
-  --priority-critical: #f87171;
-  --priority-critical-bg: rgba(248, 113, 113, 0.20);
+  --priority-critical: #f43f5e;
+  --priority-critical-bg: rgba(244, 63, 94, 0.22);
 
   /* Shadows & elevation */
   --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
@@ -137,13 +140,13 @@ a:hover {
 .brand-icon-box {
   width: 38px;
   height: 38px;
-  background: linear-gradient(135deg, #047857, #14b8a6);
+  background: linear-gradient(135deg, #7e22ce, #c084fc);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.45);
+  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.5);
 }
 
 .brand-title {
@@ -199,10 +202,11 @@ a:hover {
 }
 
 .nav-link.active {
-  background: linear-gradient(90deg, #047857, #0d9488);
+  background: linear-gradient(90deg, rgba(147, 51, 234, 0.35) 0%, rgba(168, 85, 247, 0.15) 100%);
   color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 2px 10px rgba(13, 148, 136, 0.45);
+  box-shadow: 0 2px 12px rgba(168, 85, 247, 0.4);
+  border-left: 3px solid #c084fc;
 }
 
 .nav-icon {
@@ -529,13 +533,14 @@ a:hover {
   width: 36px;
   height: 36px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, #047857, #14b8a6);
+  background: linear-gradient(135deg, #7e22ce, #a855f7);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 0.85rem;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4);
 }
 
 .user-meta-info {
@@ -611,13 +616,16 @@ a:hover {
 }
 
 .btn-primary {
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, #7e22ce 0%, #9333ea 50%, #a855f7 100%);
   color: #ffffff;
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.35);
 }
 
 .btn-primary:hover {
-  background-color: var(--color-primary-hover);
-  box-shadow: 0 4px 14px rgba(45, 212, 191, 0.4);
+  background: linear-gradient(135deg, #9333ea 0%, #a855f7 50%, #c084fc 100%);
+  box-shadow: 0 6px 24px rgba(168, 85, 247, 0.55);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
@@ -634,12 +642,13 @@ a:hover {
 .btn-outline {
   background-color: transparent;
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 .btn-outline:hover {
   background-color: var(--color-primary-light);
-  color: var(--color-accent);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.35);
 }
 
 .btn-danger {
@@ -1058,9 +1067,9 @@ a:hover {
   to { transform: rotate(360deg); }
 }
 
-/* Skeleton Loading */
+/* Skeleton Loading with Purple Shimmer */
 .skeleton {
-  background: linear-gradient(90deg, #07362b 25%, #0f4d3e 50%, #07362b 75%);
+  background: linear-gradient(90deg, #140a29 25%, #2a1550 50%, #140a29 75%);
   background-size: 200% 100%;
   animation: skeletonPulse 1.5s infinite;
   border-radius: var(--radius-sm);
@@ -1238,7 +1247,8 @@ a:hover {
 .error-icon-notfound {
   background: var(--color-primary-light);
   color: var(--color-primary);
-  border: 1px solid rgba(45, 212, 191, 0.35);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
 }
 
 .error-code {
@@ -1317,6 +1327,96 @@ a:hover {
   font-weight: 600;
   font-style: italic;
 }
+
+/* Ambient Floating Canvas in Background */
+.ambient-glow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+}
+
+/* Interactive Card Cursor Glow (Driven by JS variables --glow-x, --glow-y) */
+.card, .kpi-card, .benefit-card, .flow-step-box, .tech-card, .auth-card, .quick-action-card, .category-stat-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card::before, .kpi-card::before, .benefit-card::before, .flow-step-box::before, .tech-card::before, .auth-card::before, .quick-action-card::before, .category-stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(380px circle at var(--glow-x, -500px) var(--glow-y, -500px), rgba(192, 132, 252, 0.16), transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 1;
+}
+
+.card:hover::before, .kpi-card:hover::before, .benefit-card:hover::before, .flow-step-box:hover::before, .tech-card:hover::before, .auth-card:hover::before, .quick-action-card:hover::before, .category-stat-card:hover::before {
+  opacity: 1;
+}
+
+.card:hover, .kpi-card:hover, .benefit-card:hover, .flow-step-box:hover, .tech-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 30px rgba(147, 51, 234, 0.25);
+}
+
+/* Interactive Button Click Ripple Shockwave */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  background: radial-gradient(circle, rgba(216, 180, 254, 0.7) 0%, rgba(168, 85, 247, 0.3) 60%, transparent 80%);
+  animation: btnRippleGlow 0.65s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes btnRippleGlow {
+  to {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+/* Staggered Reveal Animation */
+.reveal-item {
+  animation: revealFadeIn 0.5s ease backwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes revealFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glowing Pulse & Shimmer Keyframes */
+@keyframes glowPulseViolet {
+  0%, 100% {
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 32px rgba(192, 132, 252, 0.65);
+  }
+}
+
 
 
 
