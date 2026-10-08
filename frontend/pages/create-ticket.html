@@ -56,7 +56,7 @@
       </header>
 
       <main class="page-content">
-        <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <div class="card create-ticket-card">
           <div class="card-header">
             <h3 class="card-title">New Support Incident Intake</h3>
             <span class="badge badge-status-open"><span class="badge-dot"></span>Initial State: OPEN</span>
@@ -64,7 +64,7 @@
 
           <div class="card-body">
             <!-- Form instructions -->
-            <p class="empty-state-desc" style="margin-bottom: 24px;">
+            <p class="empty-state-desc mb-24">
               Please provide clear details regarding your technical problem. Your ticket will immediately enter the intake queue with initial <strong>OPEN</strong> status and be dispatched to the appropriate IT specialist.
             </p>
 
@@ -110,11 +110,11 @@
                 <div id="desc-error" class="form-error-msg">Description must be between 10 and 2000 characters.</div>
               </div>
 
-              <div class="modal-footer" style="background: none; border-top: 1px solid var(--border-color); padding: 20px 0 0 0;">
+              <div class="modal-footer form-footer-action">
                 <a href="tickets.html" class="btn btn-secondary" data-i18n="cancel">Cancel</a>
                 <button type="submit" id="submit-ticket-btn" class="btn btn-primary btn-lg">
                   <span id="btn-text" data-i18n="submit_request">Submit Request</span>
-                  <span id="btn-spinner" class="spinner" style="display: none; width: 18px; height: 18px; border-width: 2px;"></span>
+                  <span id="btn-spinner" class="spinner btn-spinner-icon d-none"></span>
                 </button>
               </div>
             </form>
