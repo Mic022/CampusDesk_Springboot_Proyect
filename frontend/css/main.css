@@ -460,7 +460,7 @@ a:hover {
 }
 
 .notification-item.unread {
-  background-color: rgba(59, 130, 246, 0.08);
+  background-color: var(--color-primary-light);
 }
 
 .notification-dot {
@@ -1238,7 +1238,7 @@ a:hover {
 .error-icon-notfound {
   background: var(--color-primary-light);
   color: var(--color-primary);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(45, 212, 191, 0.35);
 }
 
 .error-code {
