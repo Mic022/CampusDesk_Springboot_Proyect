@@ -39,8 +39,8 @@ async function loadTicketDetails() {
   const skeleton = document.getElementById('detail-skeleton');
   const container = document.getElementById('detail-container');
 
-  skeleton.style.display = 'flex';
-  container.style.display = 'none';
+  skeleton.classList.remove('d-none');
+  container.classList.add('d-none');
 
   try {
     const [ticket, comments, history] = await Promise.all([
@@ -56,15 +56,15 @@ async function loadTicketDetails() {
     renderAuditHistory(history);
     renderRoleActions(ticket);
 
-    skeleton.style.display = 'none';
-    container.style.display = 'block';
+    skeleton.classList.add('d-none');
+    container.classList.remove('d-none');
 
     if (typeof I18n !== 'undefined') {
-      I18n.translateDOM();
+      I18n.translatePage();
     }
 
   } catch (err) {
-    skeleton.style.display = 'none';
+    skeleton.classList.add('d-none');
     Toast.error('Error Loading Ticket', err.message || 'Unable to fetch incident details.');
   }
 }
@@ -136,11 +136,11 @@ function renderComments(comments, status) {
 
   // Disable commenting if ticket is CLOSED per business rules
   if (status === 'CLOSED') {
-    inputArea.style.display = 'none';
-    closedNotice.style.display = 'block';
+    inputArea.classList.add('d-none');
+    closedNotice.classList.remove('d-none');
   } else {
-    inputArea.style.display = 'block';
-    closedNotice.style.display = 'none';
+    inputArea.classList.remove('d-none');
+    closedNotice.classList.add('d-none');
   }
 
   if (comments.length === 0) {
