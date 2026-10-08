@@ -6,24 +6,35 @@
   <title>CampusDesk · 403 Access Denied | TechNova Solutions</title>
   <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: var(--bg-main);">
+<body class="error-page-body">
 
-  <div class="card" style="max-width: 520px; width: 90%; text-align: center; padding: 48px 32px; box-shadow: var(--shadow-lg);">
-    <div style="width: 72px; height: 72px; margin: 0 auto 20px; border-radius: 50%; background: #fee2e2; color: var(--priority-critical); display: flex; align-items: center; justify-content: center;">
+  <div id="auth-lang-container" class="auth-lang-floating"></div>
+
+  <div class="card error-card">
+    <div class="error-icon-box error-icon-forbidden">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     </div>
 
-    <div style="font-size: 3rem; font-weight: 900; color: var(--text-main); line-height: 1; margin-bottom: 8px;">403</div>
-    <h1 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px;">Restricted Access</h1>
-    <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 28px;">
+    <div class="error-code">403</div>
+    <h1 class="error-title">Restricted Access</h1>
+    <p class="error-desc">
       You do not possess the required security role privileges to access this enterprise management resource.
     </p>
 
-    <div style="display: flex; justify-content: center; gap: 12px;">
+    <div class="error-actions">
       <a href="dashboard.html" class="btn btn-primary btn-lg">Return to Dashboard</a>
       <a href="login.html" class="btn btn-secondary btn-lg">Switch Account</a>
     </div>
   </div>
 
+  <script src="../js/i18n.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('auth-lang-container');
+      if (container && window.I18n) {
+        container.appendChild(I18n.createLanguageSelector());
+      }
+    });
+  </script>
 </body>
 </html>
