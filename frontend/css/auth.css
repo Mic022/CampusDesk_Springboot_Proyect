@@ -1,12 +1,21 @@
 /**
  * CampusDesk Authentication Styles
- * Split-screen layout, branded hero showcase, password visibility toggle, and validation styles.
+ * Split-screen layout, branded hero showcase, password visibility toggle,
+ * demo account helpers, and validation styles.
  */
 
 .auth-page {
   min-height: 100vh;
   display: flex;
   background-color: var(--bg-main);
+  position: relative;
+}
+
+.auth-lang-floating {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
 }
 
 .auth-split-container {
@@ -18,7 +27,8 @@
 /* Left Hero Branding Panel */
 .auth-hero-panel {
   flex: 1.1;
-  background: linear-gradient(135deg, #0b192c 0%, #1e3a8a 100%);
+  background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.25) 0%, rgba(8, 13, 26, 0.98) 75%),
+              linear-gradient(180deg, #080d1a 0%, #11192e 100%);
   color: #ffffff;
   padding: 60px;
   display: flex;
@@ -26,6 +36,7 @@
   justify-content: space-between;
   position: relative;
   overflow: hidden;
+  border-right: 1px solid var(--border-color);
 }
 
 .auth-hero-panel::before {
@@ -35,7 +46,7 @@
   right: -10%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -49,7 +60,7 @@
 .auth-brand-logo {
   width: 44px;
   height: 44px;
-  background: #2563eb;
+  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
@@ -61,11 +72,12 @@
   font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+  color: var(--text-main);
 }
 
 .auth-company-tag {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -81,11 +93,12 @@
   line-height: 1.2;
   margin-bottom: 20px;
   letter-spacing: -0.02em;
+  color: var(--text-main);
 }
 
 .auth-hero-desc {
   font-size: 1.05rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 36px;
 }
@@ -101,7 +114,7 @@
   align-items: center;
   gap: 12px;
   font-size: 0.95rem;
-  color: #e2e8f0;
+  color: var(--text-secondary);
 }
 
 .auth-feature-check {
@@ -115,11 +128,12 @@
   justify-content: center;
   color: #60a5fa;
   font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .auth-hero-footer {
   font-size: 0.82rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 /* Right Form Interactive Panel */
@@ -137,6 +151,11 @@
   max-width: 440px;
 }
 
+.auth-card-wide {
+  width: 100%;
+  max-width: 480px;
+}
+
 .auth-header {
   margin-bottom: 32px;
 }
@@ -152,6 +171,14 @@
 .auth-subtitle {
   font-size: 0.92rem;
   color: var(--text-muted);
+}
+
+.auth-alert-box {
+  display: none;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  font-size: 0.88rem;
 }
 
 .password-input-wrapper {
@@ -177,8 +204,8 @@
 }
 
 .security-notice-box {
-  background-color: #eff6ff;
-  border: 1px solid #bfdbfe;
+  background-color: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   border-radius: var(--radius-sm);
   padding: 12px 14px;
   margin-bottom: 22px;
@@ -188,14 +215,37 @@
 }
 
 .security-notice-icon {
-  color: #2563eb;
+  color: var(--color-primary);
   margin-top: 1px;
 }
 
 .security-notice-text {
   font-size: 0.8rem;
-  color: #1e40af;
+  color: var(--text-secondary);
   line-height: 1.4;
+}
+
+/* Demo quick login helpers */
+.demo-fill-box {
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border-color);
+}
+
+.demo-fill-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.demo-fill-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .auth-footer-prompt {
