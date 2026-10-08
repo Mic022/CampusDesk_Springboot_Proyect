@@ -29,4 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('profile-logout-btn')?.addEventListener('click', () => {
     Auth.logout();
   });
+
+  if (window.I18n) {
+    I18n.translatePage();
+  }
 });
