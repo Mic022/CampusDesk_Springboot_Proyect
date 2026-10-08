@@ -76,9 +76,9 @@ async function loadTickets() {
   const tableContainer = document.getElementById('tickets-table-container');
   const emptyState = document.getElementById('tickets-empty');
 
-  skeleton.style.display = 'flex';
-  tableContainer.style.display = 'none';
-  emptyState.style.display = 'none';
+  skeleton.classList.remove('d-none');
+  tableContainer.classList.add('d-none');
+  emptyState.classList.add('d-none');
 
   const params = new URLSearchParams();
   if (status) params.append('status', status);
@@ -90,10 +90,10 @@ async function loadTickets() {
   try {
     const data = await apiFetch(endpoint);
     allFetchedTickets = Array.isArray(data) ? data : [];
-    skeleton.style.display = 'none';
+    skeleton.classList.add('d-none');
     applyClientFilters();
   } catch (err) {
-    skeleton.style.display = 'none';
+    skeleton.classList.add('d-none');
     Toast.error('Load Failed', err.message || 'Unable to retrieve tickets.');
   }
 }
@@ -122,17 +122,17 @@ function applyClientFilters() {
   countBadge.textContent = `All Incidents (${filtered.length})`;
 
   if (filtered.length === 0) {
-    tableContainer.style.display = 'none';
-    emptyState.style.display = 'block';
+    tableContainer.classList.add('d-none');
+    emptyState.classList.remove('d-none');
     return;
   }
 
-  emptyState.style.display = 'none';
-  tableContainer.style.display = 'block';
+  emptyState.classList.add('d-none');
+  tableContainer.classList.remove('d-none');
 
   tableBody.innerHTML = filtered.map(t => {
     const formattedId = `#TK-${String(t.id).padStart(4, '0')}`;
-    const techName = t.technician ? t.technician.fullName : '<span class="text-muted" style="font-style: italic;">Unassigned</span>';
+    const techName = t.technician ? t.technician.fullName : '<span class="text-unassigned">Unassigned</span>';
 
     return `
       <tr>
