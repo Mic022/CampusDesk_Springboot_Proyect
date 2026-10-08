@@ -862,6 +862,12 @@ a:hover {
   to { transform: translateX(0); }
 }
 
+.toast-leaving {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.3s ease;
+}
+
 .toast-success { border-left-color: var(--status-resolved); }
 .toast-error { border-left-color: var(--priority-critical); }
 .toast-warning { border-left-color: var(--priority-high); }
