@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderPriorityDistribution(tickets);
     renderCategoryBreakdown(tickets);
 
+    if (window.I18n) {
+      I18n.translatePage();
+    }
+
   } catch (err) {
     Toast.error('Analytics Error', err.message || 'Unable to load statistics.');
   }
@@ -35,28 +39,28 @@ function renderKPIs(summary) {
       <div class="kpi-trend trend-up">All-time tracked</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-card-header"><span class="kpi-label">Open</span><div class="kpi-icon-wrapper" style="color: var(--status-open);">${Icons.clock}</div></div>
-      <div class="kpi-value" style="color: var(--status-open);">${summary.open || 0}</div>
+      <div class="kpi-card-header"><span class="kpi-label">Open</span><div class="kpi-icon-wrapper kpi-open">${Icons.clock}</div></div>
+      <div class="kpi-value kpi-open">${summary.open || 0}</div>
       <div class="kpi-trend trend-warning">Unassigned triage</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-card-header"><span class="kpi-label">Assigned</span><div class="kpi-icon-wrapper" style="color: var(--status-assigned);">${Icons.technicians}</div></div>
-      <div class="kpi-value" style="color: var(--status-assigned);">${summary.assigned || 0}</div>
+      <div class="kpi-card-header"><span class="kpi-label">Assigned</span><div class="kpi-icon-wrapper kpi-assigned">${Icons.technicians}</div></div>
+      <div class="kpi-value kpi-assigned">${summary.assigned || 0}</div>
       <div class="kpi-trend trend-neutral">Specialist dispatched</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-card-header"><span class="kpi-label">In Progress</span><div class="kpi-icon-wrapper" style="color: var(--status-in-progress);">${Icons.clock}</div></div>
-      <div class="kpi-value" style="color: var(--status-in-progress);">${summary.inProgress || 0}</div>
+      <div class="kpi-card-header"><span class="kpi-label">In Progress</span><div class="kpi-icon-wrapper kpi-in-progress">${Icons.clock}</div></div>
+      <div class="kpi-value kpi-in-progress">${summary.inProgress || 0}</div>
       <div class="kpi-trend trend-warning">Active repairs</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-card-header"><span class="kpi-label">Resolved</span><div class="kpi-icon-wrapper" style="color: var(--status-resolved);">${Icons.check}</div></div>
-      <div class="kpi-value" style="color: var(--status-resolved);">${summary.resolved || 0}</div>
+      <div class="kpi-card-header"><span class="kpi-label">Resolved</span><div class="kpi-icon-wrapper kpi-resolved">${Icons.check}</div></div>
+      <div class="kpi-value kpi-resolved">${summary.resolved || 0}</div>
       <div class="kpi-trend trend-up">Awaiting user check</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-card-header"><span class="kpi-label">Closed</span><div class="kpi-icon-wrapper" style="color: var(--status-closed);">${Icons.shield}</div></div>
-      <div class="kpi-value" style="color: var(--status-closed);">${summary.closed || 0}</div>
+      <div class="kpi-card-header"><span class="kpi-label">Closed</span><div class="kpi-icon-wrapper kpi-closed">${Icons.shield}</div></div>
+      <div class="kpi-value kpi-closed">${summary.closed || 0}</div>
       <div class="kpi-trend trend-neutral">Archived success</div>
     </div>
   `;
@@ -103,8 +107,8 @@ function renderDonutChart(summary) {
   container.innerHTML = `
     <div class="chart-container">
       <div class="chart-svg-wrapper">
-        <svg width="200" height="200" viewBox="0 0 160 160" style="transform: rotate(-90deg);">
-          <circle cx="80" cy="80" r="${radius}" fill="none" stroke="#f1f5f9" stroke-width="22" />
+        <svg class="chart-donut-svg" width="200" height="200" viewBox="0 0 160 160">
+          <circle cx="80" cy="80" r="${radius}" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="22" />
           <circle cx="80" cy="80" r="${radius}" fill="none" stroke="var(--status-open)" stroke-width="22" stroke-dasharray="${dashOpen}" stroke-dashoffset="${offsetOpen}" />
           <circle cx="80" cy="80" r="${radius}" fill="none" stroke="var(--status-assigned)" stroke-width="22" stroke-dasharray="${dashAssigned}" stroke-dashoffset="${offsetAssigned}" />
           <circle cx="80" cy="80" r="${radius}" fill="none" stroke="var(--status-in-progress)" stroke-width="22" stroke-dasharray="${dashProg}" stroke-dashoffset="${offsetProg}" />
@@ -113,11 +117,11 @@ function renderDonutChart(summary) {
         </svg>
       </div>
       <div class="chart-legend">
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-open);"></span> Open (${open})</div>
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-assigned);"></span> Assigned (${assigned})</div>
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-in-progress);"></span> In Progress (${inProgress})</div>
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-resolved);"></span> Resolved (${resolved})</div>
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-closed);"></span> Closed (${closed})</div>
+        <div class="legend-item"><span class="legend-color-box legend-color-open"></span> Open (${open})</div>
+        <div class="legend-item"><span class="legend-color-box legend-color-assigned"></span> Assigned (${assigned})</div>
+        <div class="legend-item"><span class="legend-color-box legend-color-in-progress"></span> In Progress (${inProgress})</div>
+        <div class="legend-item"><span class="legend-color-box legend-color-resolved"></span> Resolved (${resolved})</div>
+        <div class="legend-item"><span class="legend-color-box legend-color-closed"></span> Closed (${closed})</div>
       </div>
     </div>
   `;
@@ -132,44 +136,44 @@ function renderPriorityDistribution(tickets) {
   const total = tickets.length || 1;
 
   container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 16px; padding: 12px 0;">
+    <div class="chart-bar-list">
       <div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 700; margin-bottom: 6px;">
+        <div class="chart-bar-header">
           <span>LOW SEVERITY</span>
           <span>${low} (${Math.round((low/total)*100)}%)</span>
         </div>
-        <div style="height: 10px; background: var(--bg-subtle); border-radius: var(--radius-full); overflow: hidden;">
-          <div style="height: 100%; width: ${(low/total)*100}%; background: var(--priority-low);"></div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill bg-priority-low" style="width: ${(low/total)*100}%;"></div>
         </div>
       </div>
 
       <div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 700; margin-bottom: 6px;">
+        <div class="chart-bar-header">
           <span>MEDIUM SEVERITY</span>
           <span>${med} (${Math.round((med/total)*100)}%)</span>
         </div>
-        <div style="height: 10px; background: var(--bg-subtle); border-radius: var(--radius-full); overflow: hidden;">
-          <div style="height: 100%; width: ${(med/total)*100}%; background: var(--priority-medium);"></div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill bg-priority-medium" style="width: ${(med/total)*100}%;"></div>
         </div>
       </div>
 
       <div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 700; margin-bottom: 6px;">
+        <div class="chart-bar-header">
           <span>HIGH SEVERITY</span>
           <span>${high} (${Math.round((high/total)*100)}%)</span>
         </div>
-        <div style="height: 10px; background: var(--bg-subtle); border-radius: var(--radius-full); overflow: hidden;">
-          <div style="height: 100%; width: ${(high/total)*100}%; background: var(--priority-high);"></div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill bg-priority-high" style="width: ${(high/total)*100}%;"></div>
         </div>
       </div>
 
       <div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 700; margin-bottom: 6px;">
-          <span style="color: var(--priority-critical);">CRITICAL OUTAGE</span>
-          <span style="color: var(--priority-critical); font-weight: 800;">${crit} (${Math.round((crit/total)*100)}%)</span>
+        <div class="chart-bar-header text-critical">
+          <span>CRITICAL OUTAGE</span>
+          <span>${crit} (${Math.round((crit/total)*100)}%)</span>
         </div>
-        <div style="height: 10px; background: var(--bg-subtle); border-radius: var(--radius-full); overflow: hidden;">
-          <div style="height: 100%; width: ${(crit/total)*100}%; background: var(--priority-critical);"></div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill bg-priority-critical" style="width: ${(crit/total)*100}%;"></div>
         </div>
       </div>
     </div>
@@ -182,15 +186,15 @@ function renderCategoryBreakdown(tickets) {
   const total = tickets.length || 1;
 
   container.innerHTML = `
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+    <div class="category-breakdown-grid">
       ${categories.map(cat => {
         const count = tickets.filter(t => t.category === cat).length;
         const pct = Math.round((count / total) * 100);
         return `
-          <div style="padding: 16px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-subtle);">
-            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">${cat}</div>
-            <div style="font-size: 1.6rem; font-weight: 800; color: var(--text-main); margin: 6px 0;">${count}</div>
-            <div style="font-size: 0.78rem; color: var(--text-secondary);">${pct}% of incident volume</div>
+          <div class="category-stat-card">
+            <div class="category-stat-title">${cat}</div>
+            <div class="category-stat-count">${count}</div>
+            <div class="category-stat-sub">${pct}% of incident volume</div>
           </div>
         `;
       }).join('')}
