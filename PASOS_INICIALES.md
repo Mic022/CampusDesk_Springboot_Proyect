@@ -53,10 +53,24 @@ En GitHub: **Settings → Collaborators** y agregar a los otros tres.
 ## 4. Cada integrante
 
 ```bash
-git clone https://github.com/USUARIO/campusdesk.git
-cd campusdesk
+git clone https://github.com/Mic022/CampusDesk_Springboot_Proyect.git
+cd CampusDesk_Springboot_Proyect
 git checkout develop
-git checkout -b feature/p1-security      # p2-tickets · p3-frontend · p4-data
+git checkout -b Dev<Nombre>               # ej.: DevMic, DevSergy
+git push -u origin Dev<Nombre>
+```
+
+### Ramas
+
+- `main`: versión estable para la entrega. Solo recibe merges desde `develop`.
+- `develop`: integración del equipo. Solo recibe pull requests desde las ramas personales.
+- `Dev<Nombre>`: rama de trabajo de cada integrante, dentro de su zona (ver README). Nadie hace push directo a `develop` ni a `main`.
+
+Antes de abrir un pull request, traer lo último de `develop` para resolver conflictos en la rama propia:
+
+```bash
+git checkout Dev<Nombre>
+git pull origin develop
 ```
 
 Cada quien crea su propio `backend/.env` a partir de `.env.example` y su base `campusdesk` local.
