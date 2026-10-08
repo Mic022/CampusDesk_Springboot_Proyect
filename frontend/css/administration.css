@@ -128,3 +128,14 @@
 
 .workload-bar-fill.high { background-color: var(--priority-high); }
 .workload-bar-fill.critical { background-color: var(--priority-critical); }
+
+.tech-card-action {
+  margin-top: 16px;
+}
+
+.empty-tech-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px;
+}
