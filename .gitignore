@@ -1,0 +1,15 @@
+# Secretos
+.env
+*.env
+!.env.example
+
+# Backend (Gradle)
+backend/build/
+backend/.gradle/
+
+# IDEs y sistema
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,11 @@
+-- =============================================================
+-- CAMPUSDESK · Estructura de la base de datos
+-- Dueño: Persona 4
+--
+-- Preparación (una sola vez, en psql o pgAdmin):
+--   CREATE DATABASE campusdesk;
+-- Luego ejecutar este archivo conectado a la base campusdesk.
+--
+-- Tablas: users, tickets, comments, status_history
+-- Incluir: claves foráneas, UNIQUE, NOT NULL y CHECK de los enums.
+-- =============================================================

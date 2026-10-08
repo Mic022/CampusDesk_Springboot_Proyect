@@ -1,0 +1,9 @@
+-- =============================================================
+-- CAMPUSDESK · Datos de prueba
+-- Dueño: Persona 4
+--
+-- Ejecutar después de schema.sql.
+-- Contraseñas SIEMPRE con hash BCrypt (nunca en texto plano).
+-- El ADMIN y los técnicos los crea el DataInitializer del backend (Persona 1).
+-- Aquí: usuarios USER, tickets en todos los estados, comentarios e historial.
+-- =============================================================
