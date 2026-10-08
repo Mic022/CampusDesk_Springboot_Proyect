@@ -62,9 +62,7 @@ const Toast = {
 
     if (duration > 0) {
       setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100%)';
-        toast.style.transition = 'all 0.3s ease';
+        toast.classList.add('toast-leaving');
         setTimeout(() => toast.remove(), 300);
       }, duration);
     }
@@ -160,14 +158,14 @@ function getStatusBadge(status) {
   const norm = (status || 'OPEN').toUpperCase();
   const label = norm.replace('_', ' ');
   const cssClass = norm.toLowerCase().replace('_', '-');
-  return `<span class="badge badge-status-${cssClass}"><span class="badge-dot"></span>${label}</span>`;
+  return `<span class="badge badge-status-${cssClass}" data-i18n="status_${norm.toLowerCase()}"><span class="badge-dot"></span>${label}</span>`;
 }
 
 // Generate HTML badge for ticket priorities
 function getPriorityBadge(priority) {
   const norm = (priority || 'MEDIUM').toUpperCase();
   const cssClass = norm.toLowerCase();
-  return `<span class="badge badge-priority-${cssClass}">${norm}</span>`;
+  return `<span class="badge badge-priority-${cssClass}" data-i18n="priority_${norm.toLowerCase()}">${norm}</span>`;
 }
 
 // Smoothly dismiss initial splash loader screen
