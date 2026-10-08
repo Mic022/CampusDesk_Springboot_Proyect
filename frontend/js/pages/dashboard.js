@@ -2,7 +2,7 @@
  * CampusDesk Dashboard Page Controller
  * Client: TechNova Solutions
  * Fetches analytics reports and tickets, rendering customized operational views
- * for ADMIN, TECHNICIAN, and USER roles with pure SVG data visualizations.
+ * for ADMIN, TECHNICIAN, and USER roles with pure SVG data visualizations and i18n support.
  */
 'use strict';
 
@@ -35,6 +35,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       renderUserDashboard(viewContainer, summary, tickets, user);
     }
 
+    if (typeof I18n !== 'undefined') {
+      I18n.translateDOM();
+    }
+
   } catch (err) {
     loadingEl.style.display = 'none';
     Toast.error('Dashboard Error', err.message || 'Failed to load operational metrics.');
@@ -48,7 +52,6 @@ document.addEventListener('DOMContentLoaded', async () => {
  */
 function renderAdminDashboard(container, summary, tickets, technicians) {
   const criticalTickets = tickets.filter(t => t.priority === 'CRITICAL' && t.status !== 'CLOSED');
-  const unassignedTickets = tickets.filter(t => !t.technician && t.status === 'OPEN');
 
   container.innerHTML = `
     <!-- Top KPI Metrics Grid -->
@@ -65,45 +68,45 @@ function renderAdminDashboard(container, summary, tickets, technicians) {
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">Open Intake</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-open);">${Icons.clock}</div>
+          <div class="kpi-icon-wrapper icon-open">${Icons.clock}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-open);">${summary.open || 0}</div>
+        <div class="kpi-value val-open">${summary.open || 0}</div>
         <div class="kpi-trend trend-warning">Awaiting triage</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">Assigned</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-assigned);">${Icons.technicians}</div>
+          <div class="kpi-icon-wrapper icon-assigned">${Icons.technicians}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-assigned);">${summary.assigned || 0}</div>
+        <div class="kpi-value val-assigned">${summary.assigned || 0}</div>
         <div class="kpi-trend trend-neutral">Dispatched</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">In Progress</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-in-progress);">${Icons.clock}</div>
+          <div class="kpi-icon-wrapper icon-progress">${Icons.clock}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-in-progress);">${summary.inProgress || 0}</div>
+        <div class="kpi-value val-progress">${summary.inProgress || 0}</div>
         <div class="kpi-trend trend-warning">Under active repair</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">Resolved</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-resolved);">${Icons.check}</div>
+          <div class="kpi-icon-wrapper icon-resolved">${Icons.check}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-resolved);">${summary.resolved || 0}</div>
+        <div class="kpi-value val-resolved">${summary.resolved || 0}</div>
         <div class="kpi-trend trend-up">Pending verification</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">Closed</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-closed);">${Icons.shield}</div>
+          <div class="kpi-icon-wrapper icon-closed">${Icons.shield}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-closed);">${summary.closed || 0}</div>
+        <div class="kpi-value val-closed">${summary.closed || 0}</div>
         <div class="kpi-trend trend-neutral">Archived</div>
       </div>
     </div>
@@ -114,7 +117,7 @@ function renderAdminDashboard(container, summary, tickets, technicians) {
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Status Breakdown</h3>
-          <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Distribution</span>
+          <span class="card-header-badge">Distribution</span>
         </div>
         <div class="card-body">
           ${renderSvgDonutChart(summary)}
@@ -125,7 +128,7 @@ function renderAdminDashboard(container, summary, tickets, technicians) {
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Priority Distribution</h3>
-          <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Volume by Severity</span>
+          <span class="card-header-badge">Volume by Severity</span>
         </div>
         <div class="card-body">
           ${renderSvgPriorityBars(tickets)}
@@ -141,7 +144,7 @@ function renderAdminDashboard(container, summary, tickets, technicians) {
           <h3 class="card-title">Urgent Incidents (${criticalTickets.length})</h3>
           <a href="tickets.html?priority=CRITICAL" class="btn btn-outline btn-sm">View All Critical</a>
         </div>
-        <div class="card-body" style="padding: 0;">
+        <div class="card-body card-body-flush">
           ${criticalTickets.length === 0 ? `
             <div class="empty-state">
               <div class="empty-state-title">No critical incidents</div>
@@ -167,7 +170,7 @@ function renderAdminDashboard(container, summary, tickets, technicians) {
                       <td data-label="Title"><strong>${t.title}</strong></td>
                       <td data-label="Category">${t.category}</td>
                       <td data-label="Status">${getStatusBadge(t.status)}</td>
-                      <td data-label="Technician">${t.technician ? t.technician.fullName : '<span style="color: var(--priority-high); font-weight: 600;">Unassigned</span>'}</td>
+                      <td data-label="Technician">${t.technician ? t.technician.fullName : '<span class="text-unassigned">Unassigned</span>'}</td>
                       <td data-label="Action"><a href="ticket-detail.html?id=${t.id}" class="btn btn-secondary btn-sm">Inspect</a></td>
                     </tr>
                   `).join('')}
@@ -187,7 +190,7 @@ function renderAdminDashboard(container, summary, tickets, technicians) {
         <div class="card-body">
           <div class="tech-roster-list">
             ${technicians.length === 0 ? `
-              <div style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 20px;">No technicians registered.</div>
+              <div class="empty-state-desc text-center">No technicians registered.</div>
             ` : technicians.map(tech => {
               const assignedCount = tickets.filter(t => t.technician && t.technician.id === tech.id && t.status !== 'CLOSED').length;
               return `
@@ -195,8 +198,8 @@ function renderAdminDashboard(container, summary, tickets, technicians) {
                   <div class="tech-roster-info">
                     <span class="tech-status-dot"></span>
                     <div>
-                      <div style="font-size: 0.88rem; font-weight: 700;">${tech.fullName}</div>
-                      <div style="font-size: 0.75rem; color: var(--text-muted);">${tech.email}</div>
+                      <div class="tech-roster-name">${tech.fullName}</div>
+                      <div class="tech-roster-email">${tech.email}</div>
                     </div>
                   </div>
                   <span class="badge badge-priority-medium">${assignedCount} Active</span>
@@ -233,27 +236,27 @@ function renderTechnicianDashboard(container, summary, tickets, user) {
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">In Progress</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-in-progress);">${Icons.clock}</div>
+          <div class="kpi-icon-wrapper icon-progress">${Icons.clock}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-in-progress);">${activeCount}</div>
+        <div class="kpi-value val-progress">${activeCount}</div>
         <div class="kpi-trend trend-warning">Under active investigation</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">Pending Intake</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-assigned);">${Icons.technicians}</div>
+          <div class="kpi-icon-wrapper icon-assigned">${Icons.technicians}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-assigned);">${pendingCount}</div>
+        <div class="kpi-value val-assigned">${pendingCount}</div>
         <div class="kpi-trend trend-neutral">Awaiting start</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">Resolved</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-resolved);">${Icons.check}</div>
+          <div class="kpi-icon-wrapper icon-resolved">${Icons.check}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-resolved);">${resolvedCount}</div>
+        <div class="kpi-value val-resolved">${resolvedCount}</div>
         <div class="kpi-trend trend-up">Awaiting user confirmation</div>
       </div>
     </div>
@@ -263,7 +266,7 @@ function renderTechnicianDashboard(container, summary, tickets, user) {
         <h3 class="card-title">My Assigned Incident Queue</h3>
         <a href="tickets.html" class="btn btn-secondary btn-sm">Filter Queue</a>
       </div>
-      <div class="card-body" style="padding: 0;">
+      <div class="card-body card-body-flush">
         ${myTickets.length === 0 ? `
           <div class="empty-state">
             <div class="empty-state-icon">${Icons.check}</div>
@@ -317,12 +320,12 @@ function renderUserDashboard(container, summary, tickets, user) {
 
   container.innerHTML = `
     <!-- Top Action Banner -->
-    <div style="background: linear-gradient(135deg, #1e3a8a, #2563eb); border-radius: var(--radius-md); padding: 24px 28px; color: white; display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: gap; gap: 16px;">
+    <div class="user-banner-cta">
       <div>
-        <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 4px;">Need IT Assistance?</h2>
-        <p style="font-size: 0.92rem; color: #bfdbfe;">Submit an incident ticket to receive prompt support from our tech team.</p>
+        <h2 class="user-banner-title">Need IT Assistance?</h2>
+        <p class="user-banner-sub">Submit an incident ticket to receive prompt support from our tech team.</p>
       </div>
-      <a href="create-ticket.html" class="btn btn-secondary btn-lg" style="background: white; color: var(--color-primary); font-weight: 700;">+ Submit New Request</a>
+      <a href="create-ticket.html" class="btn btn-banner btn-lg" data-i18n="new_request">+ Submit New Request</a>
     </div>
 
     <!-- User KPI Metrics Grid -->
@@ -338,33 +341,33 @@ function renderUserDashboard(container, summary, tickets, user) {
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">Open Intake</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-open);">${Icons.clock}</div>
+          <div class="kpi-icon-wrapper icon-open">${Icons.clock}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-open);">${openCount}</div>
+        <div class="kpi-value val-open">${openCount}</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">In Progress</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-in-progress);">${Icons.clock}</div>
+          <div class="kpi-icon-wrapper icon-progress">${Icons.clock}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-in-progress);">${inProgressCount}</div>
+        <div class="kpi-value val-progress">${inProgressCount}</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">Resolved</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-resolved);">${Icons.check}</div>
+          <div class="kpi-icon-wrapper icon-resolved">${Icons.check}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-resolved);">${resolvedCount}</div>
+        <div class="kpi-value val-resolved">${resolvedCount}</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-card-header">
           <span class="kpi-label">Closed</span>
-          <div class="kpi-icon-wrapper" style="color: var(--status-closed);">${Icons.shield}</div>
+          <div class="kpi-icon-wrapper icon-closed">${Icons.shield}</div>
         </div>
-        <div class="kpi-value" style="color: var(--status-closed);">${closedCount}</div>
+        <div class="kpi-value val-closed">${closedCount}</div>
       </div>
     </div>
 
@@ -372,15 +375,15 @@ function renderUserDashboard(container, summary, tickets, user) {
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">My Support Requests</h3>
-        <a href="create-ticket.html" class="btn btn-primary btn-sm">+ New Request</a>
+        <a href="create-ticket.html" class="btn btn-primary btn-sm" data-i18n="new_request">+ New Request</a>
       </div>
-      <div class="card-body" style="padding: 0;">
+      <div class="card-body card-body-flush">
         ${myRequests.length === 0 ? `
           <div class="empty-state">
             <div class="empty-state-icon">${Icons.tickets}</div>
             <div class="empty-state-title">No support requests yet</div>
             <div class="empty-state-desc">You have not submitted any technical support tickets. Click below to submit your first issue.</div>
-            <a href="create-ticket.html" class="btn btn-primary">+ Submit Request</a>
+            <a href="create-ticket.html" class="btn btn-primary" data-i18n="new_request">+ Submit Request</a>
           </div>
         ` : `
           <div class="table-responsive">
@@ -404,7 +407,7 @@ function renderUserDashboard(container, summary, tickets, user) {
                     <td data-label="Category">${t.category}</td>
                     <td data-label="Priority">${getPriorityBadge(t.priority)}</td>
                     <td data-label="Status">${getStatusBadge(t.status)}</td>
-                    <td data-label="Date">${formatDate(t.createdAt)}</td>
+                    <td data-label="Date" class="text-muted">${formatDate(t.createdAt)}</td>
                     <td data-label="Action"><a href="ticket-detail.html?id=${t.id}" class="btn btn-secondary btn-sm">View Details</a></td>
                   </tr>
                 `).join('')}
@@ -460,8 +463,8 @@ function renderSvgDonutChart(summary) {
   return `
     <div class="chart-container">
       <div class="chart-svg-wrapper">
-        <svg width="180" height="180" viewBox="0 0 160 160" style="transform: rotate(-90deg);">
-          <circle cx="80" cy="80" r="${radius}" fill="none" stroke="#f1f5f9" stroke-width="22" />
+        <svg width="180" height="180" viewBox="0 0 160 160" class="chart-donut-svg">
+          <circle cx="80" cy="80" r="${radius}" fill="none" stroke="#18233e" stroke-width="22" />
           <circle cx="80" cy="80" r="${radius}" fill="none" stroke="var(--status-open)" stroke-width="22" stroke-dasharray="${dashOpen}" stroke-dashoffset="${offsetOpen}" />
           <circle cx="80" cy="80" r="${radius}" fill="none" stroke="var(--status-assigned)" stroke-width="22" stroke-dasharray="${dashAssigned}" stroke-dashoffset="${offsetAssigned}" />
           <circle cx="80" cy="80" r="${radius}" fill="none" stroke="var(--status-in-progress)" stroke-width="22" stroke-dasharray="${dashProg}" stroke-dashoffset="${offsetProg}" />
@@ -470,11 +473,11 @@ function renderSvgDonutChart(summary) {
         </svg>
       </div>
       <div class="chart-legend">
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-open);"></span> Open (${open})</div>
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-assigned);"></span> Assigned (${assigned})</div>
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-in-progress);"></span> In Progress (${inProgress})</div>
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-resolved);"></span> Resolved (${resolved})</div>
-        <div class="legend-item"><span class="legend-color-box" style="background: var(--status-closed);"></span> Closed (${closed})</div>
+        <div class="legend-item"><span class="legend-color-box icon-open"></span> Open (${open})</div>
+        <div class="legend-item"><span class="legend-color-box icon-assigned"></span> Assigned (${assigned})</div>
+        <div class="legend-item"><span class="legend-color-box icon-progress"></span> In Progress (${inProgress})</div>
+        <div class="legend-item"><span class="legend-color-box icon-resolved"></span> Resolved (${resolved})</div>
+        <div class="legend-item"><span class="legend-color-box icon-closed"></span> Closed (${closed})</div>
       </div>
     </div>
   `;
@@ -491,40 +494,40 @@ function renderSvgPriorityBars(tickets) {
   const max = Math.max(low, med, high, crit, 1);
 
   return `
-    <div style="display: flex; flex-direction: column; gap: 14px; padding: 10px 0;">
+    <div class="chart-bar-list">
       <div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px;">
+        <div class="chart-bar-header">
           <span>LOW</span> <span>${low}</span>
         </div>
-        <div style="height: 10px; background: var(--bg-subtle); border-radius: var(--radius-full); overflow: hidden;">
-          <div style="height: 100%; width: ${(low / max) * 100}%; background: var(--priority-low); border-radius: var(--radius-full);"></div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill" style="width: ${(low / max) * 100}%; background-color: var(--priority-low);"></div>
         </div>
       </div>
 
       <div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px;">
+        <div class="chart-bar-header">
           <span>MEDIUM</span> <span>${med}</span>
         </div>
-        <div style="height: 10px; background: var(--bg-subtle); border-radius: var(--radius-full); overflow: hidden;">
-          <div style="height: 100%; width: ${(med / max) * 100}%; background: var(--priority-medium); border-radius: var(--radius-full);"></div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill" style="width: ${(med / max) * 100}%; background-color: var(--priority-medium);"></div>
         </div>
       </div>
 
       <div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px;">
+        <div class="chart-bar-header">
           <span>HIGH</span> <span>${high}</span>
         </div>
-        <div style="height: 10px; background: var(--bg-subtle); border-radius: var(--radius-full); overflow: hidden;">
-          <div style="height: 100%; width: ${(high / max) * 100}%; background: var(--priority-high); border-radius: var(--radius-full);"></div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill" style="width: ${(high / max) * 100}%; background-color: var(--priority-high);"></div>
         </div>
       </div>
 
       <div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px;">
-          <span style="color: var(--priority-critical);">CRITICAL</span> <span>${crit}</span>
+        <div class="chart-bar-header text-critical">
+          <span>CRITICAL</span> <span>${crit}</span>
         </div>
-        <div style="height: 10px; background: var(--bg-subtle); border-radius: var(--radius-full); overflow: hidden;">
-          <div style="height: 100%; width: ${(crit / max) * 100}%; background: var(--priority-critical); border-radius: var(--radius-full);"></div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill" style="width: ${(crit / max) * 100}%; background-color: var(--priority-critical);"></div>
         </div>
       </div>
     </div>
