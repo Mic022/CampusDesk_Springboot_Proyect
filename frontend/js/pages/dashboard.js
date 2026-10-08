@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       apiFetch('/tickets').catch(() => [])
     ]);
 
-    loadingEl.style.display = 'none';
-    viewContainer.style.display = 'block';
+    loadingEl.classList.add('d-none');
+    viewContainer.classList.remove('d-none');
 
     if (user.role === 'ADMIN') {
       const technicians = await apiFetch('/users/technicians').catch(() => []);
@@ -36,11 +36,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (typeof I18n !== 'undefined') {
-      I18n.translateDOM();
+      I18n.translatePage();
     }
 
   } catch (err) {
-    loadingEl.style.display = 'none';
+    loadingEl.classList.add('d-none');
     Toast.error('Dashboard Error', err.message || 'Failed to load operational metrics.');
   } finally {
     dismissSplash();
