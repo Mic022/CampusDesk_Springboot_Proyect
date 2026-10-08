@@ -25,7 +25,7 @@
       </div>
       <nav class="sidebar-nav" id="sidebar-nav"></nav>
       <div class="sidebar-footer">
-        <a href="#" class="nav-link" id="sidebar-logout-btn" style="color: #fca5a5;"></a>
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
       </div>
     </aside>
 
@@ -36,11 +36,15 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <div class="header-title-box">
-            <h1>User Accounts</h1>
+            <h1 data-i18n="nav_users">User Accounts</h1>
             <p>Enterprise identity roster and role privileges</p>
           </div>
         </div>
         <div class="header-right">
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
           <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
         </div>
       </header>
@@ -49,11 +53,11 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title" id="users-count-title">Corporate Accounts</h3>
-            <div style="position: relative; max-width: 260px;">
-              <input type="text" id="user-search-input" class="form-control" placeholder="Search accounts..." style="padding: 6px 12px; font-size: 0.85rem;">
+            <div class="search-header-box">
+              <input type="text" id="user-search-input" class="form-control form-control-sm" placeholder="Search accounts...">
             </div>
           </div>
-          <div class="card-body" style="padding: 0;">
+          <div class="card-body card-body-flush">
             <div class="table-responsive">
               <table class="data-table responsive-cards-table">
                 <thead>
@@ -76,6 +80,8 @@
     </div>
   </div>
 
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
   <script src="../js/components.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/auth.js"></script>
