@@ -33,6 +33,13 @@
   flex-wrap: wrap;
 }
 
+/* Stepper container wrapper */
+.workflow-stepper-wrapper {
+  margin-top: 10px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 16px;
+}
+
 /* Lifecycle Stepper Timeline */
 .lifecycle-stepper {
   display: flex;
@@ -78,7 +85,7 @@
 .lifecycle-step.completed .step-node {
   background-color: var(--status-resolved);
   border-color: var(--status-resolved);
-  color: white;
+  color: #ffffff;
 }
 
 .lifecycle-step.completed .step-label {
@@ -88,8 +95,8 @@
 .lifecycle-step.active .step-node {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
-  color: white;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
 }
 
 .lifecycle-step.active .step-label {
@@ -118,6 +125,13 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 24px;
+}
+
+.detail-description-text {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
 
 /* Metadata sidebar box */
@@ -164,16 +178,16 @@
   border-left: 3px solid var(--border-color);
 }
 
-.comment-card.role-admin { border-left-color: #8b5cf6; }
-.comment-card.role-tech { border-left-color: #2563eb; }
-.comment-card.role-user { border-left-color: #10b981; }
+.comment-card.role-admin { border-left-color: var(--status-assigned); }
+.comment-card.role-tech { border-left-color: var(--color-primary); }
+.comment-card.role-user { border-left-color: var(--status-resolved); }
 
 .comment-avatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   background: var(--color-primary);
-  color: white;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -207,6 +221,23 @@
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.5;
+}
+
+.comment-input-container {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.comment-closed-banner {
+  padding: 14px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  text-align: center;
+  margin-top: 20px;
+  border: 1px dashed var(--border-color);
 }
 
 /* Status History Audit Timeline */
