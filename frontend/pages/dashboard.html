@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusDesk · Dashboard | TechNova Solutions</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- Initial Splash Loading Screen -->
+  <div id="splash-loader" class="splash-loader">
+    <div class="splash-logo">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>CAMPUSDESK</span>
+    </div>
+    <div class="splash-sub">Smart IT Support Management</div>
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-wrapper">
+          <div class="brand-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <span class="brand-title">CAMPUSDESK</span>
+            <span class="brand-subtitle">TechNova</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Rendered dynamically by Navigation.render() according to role -->
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="#" class="nav-link" id="sidebar-logout-btn" style="color: #fca5a5;">
+          <!-- Sign out injected -->
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="main-wrapper">
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button id="menu-toggle" class="menu-toggle-btn" aria-label="Open sidebar menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="header-title-box">
+            <h1 id="page-title">Operations Dashboard</h1>
+            <p id="page-subtitle">Real-time incident oversight and performance metrics</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div style="position: relative; cursor: pointer; color: var(--text-secondary);" title="Notifications">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span style="position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background-color: var(--priority-critical); border-radius: 50%;"></span>
+          </div>
+
+          <!-- User Profile Chip -->
+          <div class="user-profile-badge" id="header-user-profile" title="View Profile">
+            <!-- Rendered by Navigation -->
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Main Content Container -->
+      <main class="page-content" id="dashboard-content">
+        <!-- Skeleton Loading State -->
+        <div id="dashboard-loading" style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+            <div class="skeleton" style="height: 110px;"></div>
+            <div class="skeleton" style="height: 110px;"></div>
+            <div class="skeleton" style="height: 110px;"></div>
+            <div class="skeleton" style="height: 110px;"></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+            <div class="skeleton" style="height: 320px;"></div>
+            <div class="skeleton" style="height: 320px;"></div>
+          </div>
+        </div>
+
+        <!-- Dynamic Role Dashboard Target -->
+        <div id="role-dashboard-view" style="display: none;"></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navigation.js"></script>
+  <script src="../js/pages/dashboard.js"></script>
+</body>
+</html>
