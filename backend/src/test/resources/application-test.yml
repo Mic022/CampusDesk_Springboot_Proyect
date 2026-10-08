@@ -1,0 +1,27 @@
+# Perfil de pruebas (@ActiveProfiles("test")). Dueño: Persona 4.
+# Usa H2 en memoria en modo PostgreSQL, así ./gradlew test funciona sin base de datos ni archivo .env.
+# Carga el mismo database/schema.sql y valida las entidades contra él: si no coinciden, las pruebas fallan.
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:campusdesk;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    username: sa
+    password: ""
+  sql:
+    init:
+      mode: always
+      # Ruta relativa a backend/ (directorio desde el que Gradle ejecuta las pruebas)
+      schema-locations: file:../database/schema.sql
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+# Valores ficticios, solo para pruebas
+app:
+  jwt:
+    secret: test-secret-key-only-for-tests-0123456789abcdef
+    expiration-ms: 3600000
+  init:
+    admin-email: admin@test.com
+    admin-password: Admin12345
+    technician-password: Tech12345
