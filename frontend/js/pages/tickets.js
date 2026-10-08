@@ -132,7 +132,7 @@ function applyClientFilters() {
 
   tableBody.innerHTML = filtered.map(t => {
     const formattedId = `#TK-${String(t.id).padStart(4, '0')}`;
-    const techName = t.technician ? t.technician.fullName : '<span style="color: var(--text-muted); font-style: italic;">Unassigned</span>';
+    const techName = t.technician ? t.technician.fullName : '<span class="text-muted" style="font-style: italic;">Unassigned</span>';
 
     return `
       <tr>
@@ -144,11 +144,15 @@ function applyClientFilters() {
         <td data-label="Priority">${getPriorityBadge(t.priority)}</td>
         <td data-label="Status">${getStatusBadge(t.status)}</td>
         <td data-label="Assigned Tech">${techName}</td>
-        <td data-label="Date" style="font-size: 0.82rem; color: var(--text-muted);">${formatDate(t.createdAt)}</td>
+        <td data-label="Date" class="text-muted">${formatDate(t.createdAt)}</td>
         <td data-label="Action">
           <a href="ticket-detail.html?id=${t.id}" class="btn btn-secondary btn-sm">Inspect</a>
         </td>
       </tr>
     `;
   }).join('');
+
+  if (typeof I18n !== 'undefined') {
+    I18n.translateDOM();
+  }
 }
