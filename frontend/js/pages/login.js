@@ -50,16 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function clearErrors() {
-    alertBox.style.display = 'none';
-    document.getElementById('email-error').style.display = 'none';
-    document.getElementById('password-error').style.display = 'none';
+    alertBox.classList.remove('active', 'auth-alert-error', 'auth-alert-success');
+    document.getElementById('email-error').classList.remove('active');
+    document.getElementById('password-error').classList.remove('active');
   }
 
   function showAlert(msg, isError = true) {
-    alertBox.style.display = 'block';
-    alertBox.style.backgroundColor = isError ? 'var(--priority-critical-bg)' : 'var(--status-resolved-bg)';
-    alertBox.style.color = isError ? 'var(--priority-critical)' : 'var(--status-resolved)';
-    alertBox.style.border = `1px solid ${isError ? '#fca5a5' : '#86efac'}`;
+    alertBox.className = `auth-alert-box active ${isError ? 'auth-alert-error' : 'auth-alert-success'}`;
     alertBox.textContent = msg;
   }
 
@@ -76,13 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
-      document.getElementById('email-error').style.display = 'block';
+      document.getElementById('email-error').classList.add('active');
       hasError = true;
     }
 
     // Validate password
     if (!password) {
-      document.getElementById('password-error').style.display = 'block';
+      document.getElementById('password-error').classList.add('active');
       hasError = true;
     }
 
@@ -90,8 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set loading state
     submitBtn.disabled = true;
-    btnText.style.display = 'none';
-    btnSpinner.style.display = 'inline-block';
+    btnText.classList.add('d-none');
+    btnSpinner.classList.remove('d-none');
 
     try {
       const user = await Auth.login(email, password);
@@ -102,8 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       showAlert(err.message || 'Invalid credentials. Please verify your email and password.');
       submitBtn.disabled = false;
-      btnText.style.display = 'inline';
-      btnSpinner.style.display = 'none';
+      btnText.classList.remove('d-none');
+      btnSpinner.classList.add('d-none');
     }
   });
 });
