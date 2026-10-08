@@ -59,15 +59,15 @@
       <main class="page-content">
         <!-- Skeleton Loading State -->
         <div id="detail-skeleton" class="d-flex flex-column gap-20">
-          <div class="skeleton" style="height: 160px;"></div>
+          <div class="skeleton skeleton-card-banner"></div>
           <div class="detail-grid-layout">
-            <div class="skeleton" style="height: 380px;"></div>
-            <div class="skeleton" style="height: 380px;"></div>
+            <div class="skeleton skeleton-card-tall"></div>
+            <div class="skeleton skeleton-card-tall"></div>
           </div>
         </div>
 
         <!-- Main Detail Content (Populated Dynamically) -->
-        <div id="detail-container" style="display: none;">
+        <div id="detail-container" class="d-none">
           <!-- Top Card: Header & Interactive Lifecycle Stepper -->
           <div class="detail-header-card">
             <div class="detail-title-row">
@@ -87,7 +87,7 @@
               <div class="kpi-label" data-i18n="workflow_tag">Lifecycle Progress</div>
               <div class="lifecycle-stepper" id="lifecycle-stepper">
                 <div class="stepper-progress-bar">
-                  <div class="stepper-progress-fill" id="stepper-fill" style="width: 0%;"></div>
+                  <div class="stepper-progress-fill w-0" id="stepper-fill"></div>
                 </div>
 
                 <div class="lifecycle-step" id="step-OPEN">
@@ -154,7 +154,7 @@
                   </div>
 
                   <!-- Closed ticket notice banner -->
-                  <div id="comment-closed-notice" class="comment-closed-banner" style="display: none;">
+                  <div id="comment-closed-notice" class="comment-closed-banner d-none">
                     This incident is CLOSED. Further comments are disabled.
                   </div>
                 </div>
