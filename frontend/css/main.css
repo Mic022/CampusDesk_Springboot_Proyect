@@ -1307,5 +1307,12 @@ a:hover {
   padding: 20px 0 0 0 !important;
 }
 
+.text-unassigned {
+  color: var(--priority-high);
+  font-weight: 600;
+  font-style: italic;
+}
+
+
 
 
