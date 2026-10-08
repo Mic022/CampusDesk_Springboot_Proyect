@@ -8,6 +8,9 @@
 </head>
 <body class="auth-page">
 
+  <!-- Floating Language Switcher -->
+  <div class="auth-lang-floating" id="auth-lang-container"></div>
+
   <div class="auth-split-container">
     <!-- Left Hero Branding Panel -->
     <div class="auth-hero-panel">
@@ -52,22 +55,22 @@
     <div class="auth-form-panel">
       <div class="auth-card">
         <div class="auth-header">
-          <h1 class="auth-title">Welcome back</h1>
-          <p class="auth-subtitle">Enter your corporate credentials to access the support portal</p>
+          <h1 class="auth-title" data-i18n="welcome_back">Welcome back</h1>
+          <p class="auth-subtitle" data-i18n="login_sub">Enter your corporate credentials to access the support portal</p>
         </div>
 
         <!-- Feedback Alert Container -->
-        <div id="login-alert" style="display: none; padding: 12px 16px; border-radius: var(--radius-sm); margin-bottom: 20px; font-size: 0.88rem;"></div>
+        <div id="login-alert" class="auth-alert-box"></div>
 
         <form id="login-form" novalidate>
           <div class="form-group">
-            <label for="email" class="form-label">Corporate Email</label>
+            <label for="email" class="form-label" data-i18n="email_label">Corporate Email</label>
             <input type="email" id="email" class="form-control" placeholder="name@technova.com" required autocomplete="email">
             <div id="email-error" class="form-error-msg">Please enter a valid corporate email.</div>
           </div>
 
           <div class="form-group">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label" data-i18n="password_label">Password</label>
             <div class="password-input-wrapper">
               <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
               <button type="button" id="password-toggle" class="password-toggle-btn" aria-label="Toggle password visibility">Show</button>
@@ -76,31 +79,40 @@
           </div>
 
           <!-- Quick Fill Demo Accounts -->
-          <div style="margin-bottom: 20px; padding: 10px 14px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px dashed var(--border-color);">
-            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">Demo Quick Sign-In</div>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <div class="demo-fill-box">
+            <div class="demo-fill-title" data-i18n="demo_quick_login">Demo Quick Sign-In</div>
+            <div class="demo-fill-buttons">
               <button type="button" class="btn btn-secondary btn-sm" id="demo-admin">Admin</button>
               <button type="button" class="btn btn-secondary btn-sm" id="demo-tech">Technician</button>
               <button type="button" class="btn btn-secondary btn-sm" id="demo-user">User</button>
             </div>
           </div>
 
-          <button type="submit" id="login-submit-btn" class="btn btn-primary btn-lg" style="width: 100%;">
-            <span id="btn-text">Sign In</span>
+          <button type="submit" id="login-submit-btn" class="btn btn-primary btn-lg w-100">
+            <span id="btn-text" data-i18n="sign_in">Sign In</span>
             <span id="btn-spinner" class="spinner" style="display: none; width: 18px; height: 18px; border-width: 2px;"></span>
           </button>
         </form>
 
         <div class="auth-footer-prompt">
-          Don't have an account? <a href="register.html">Create an account</a>
+          <span data-i18n="dont_have_account">Don't have an account?</span> <a href="register.html" data-i18n="create_account">Create an account</a>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="../js/i18n.js"></script>
   <script src="../js/components.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/pages/login.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('auth-lang-container');
+      if (container && typeof I18n !== 'undefined') {
+        I18n.mountSelector(container);
+      }
+    });
+  </script>
 </body>
 </html>
