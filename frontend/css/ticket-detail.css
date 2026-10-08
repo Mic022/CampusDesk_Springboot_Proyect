@@ -96,7 +96,7 @@
   background-color: var(--color-primary);
   border-color: var(--color-primary);
   color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.3);
 }
 
 .lifecycle-step.active .step-label {
