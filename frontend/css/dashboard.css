@@ -101,7 +101,7 @@
 
 /* User Callout Banner */
 .user-banner-cta {
-  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  background: linear-gradient(135deg, #065f46, #0d9488);
   border-radius: var(--radius-md);
   padding: 24px 28px;
   color: #ffffff;
@@ -111,28 +111,31 @@
   margin-bottom: 28px;
   gap: 16px;
   flex-wrap: wrap;
+  box-shadow: 0 4px 18px rgba(13, 148, 136, 0.35);
 }
 
 .user-banner-title {
   font-size: 1.4rem;
   font-weight: 800;
   margin-bottom: 4px;
+  color: #ffffff;
 }
 
 .user-banner-sub {
   font-size: 0.92rem;
-  color: #bfdbfe;
+  color: #ccfbf1;
 }
 
 .btn-banner {
   background: #ffffff;
-  color: #1e40af;
+  color: #065f46;
   font-weight: 700;
 }
 
 .btn-banner:hover {
-  background: #f1f5f9;
-  color: #1d4ed8;
+  background: #f0fdf4;
+  color: #047857;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
 
 /* Dashboard multi-column layout */
