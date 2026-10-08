@@ -1,0 +1,277 @@
+/**
+ * CampusDesk Landing Page Styles
+ * Client: TechNova Solutions
+ * Dedicated styles for corporate landing page, hero, benefits, workflow stepper, and footer.
+ */
+
+/* Top Enterprise Navigation Header */
+.landing-header {
+  background-color: rgba(17, 25, 46, 0.95);
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+}
+
+.landing-brand-title {
+  color: var(--text-main);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.landing-header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Hero Presentation Section */
+.landing-hero {
+  background: radial-gradient(circle at 50% 20%, rgba(37, 99, 235, 0.22) 0%, rgba(10, 15, 29, 0.98) 75%),
+              linear-gradient(180deg, #0a0f1d 0%, #11192e 100%);
+  color: #ffffff;
+  padding: 100px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.landing-hero-content {
+  max-width: 840px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  margin-bottom: 24px;
+  color: #93c5fd;
+  font-weight: 600;
+}
+
+.hero-heading {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+}
+
+.hero-subtext {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 40px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Benefits Section */
+.benefits-section {
+  padding: 88px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title-box {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.section-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.section-heading {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.benefit-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+.benefit-icon-box {
+  width: 48px;
+  height: 48px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.benefit-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+.benefit-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Lifecycle Workflow Flow Visual */
+.workflow-section {
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 88px 40px;
+}
+
+.flow-steps-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.flow-step-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  text-align: center;
+  flex: 1;
+  min-width: 160px;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.flow-step-box:hover {
+  border-color: var(--color-primary);
+}
+
+.flow-step-num {
+  width: 28px;
+  height: 28px;
+  background: var(--color-primary);
+  color: #ffffff;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-step-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.flow-step-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* Landing Footer */
+.landing-footer {
+  background-color: var(--bg-sidebar);
+  color: var(--text-muted);
+  padding: 60px 40px 30px;
+  border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-link {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.footer-link:hover {
+  color: var(--text-main);
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 20px auto 0;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .hero-heading { font-size: 2.2rem; }
+  .landing-header { padding: 16px 20px; }
+  .landing-hero { padding: 60px 20px; }
+  .flow-steps-container { flex-direction: column; }
+  .flow-step-box { width: 100%; }
+}
