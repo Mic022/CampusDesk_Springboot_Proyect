@@ -32,15 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function clearErrors() {
-    alertBox.style.display = 'none';
-    document.querySelectorAll('.form-error-msg').forEach(el => el.style.display = 'none');
+    alertBox.classList.remove('active', 'auth-alert-error', 'auth-alert-success');
+    document.querySelectorAll('.form-error-msg').forEach(el => el.classList.add('d-none'));
   }
 
   function showAlert(msg, isError = true) {
-    alertBox.style.display = 'block';
-    alertBox.style.backgroundColor = isError ? 'var(--priority-critical-bg)' : 'var(--status-resolved-bg)';
-    alertBox.style.color = isError ? 'var(--priority-critical)' : 'var(--status-resolved)';
-    alertBox.style.border = `1px solid ${isError ? '#fca5a5' : '#86efac'}`;
+    alertBox.className = `auth-alert-box active ${isError ? 'auth-alert-error' : 'auth-alert-success'}`;
     alertBox.textContent = msg;
   }
 
@@ -57,38 +54,38 @@ document.addEventListener('DOMContentLoaded', () => {
     let hasError = false;
 
     if (!firstName) {
-      document.getElementById('first-name-error').style.display = 'block';
+      document.getElementById('first-name-error').classList.add('active');
       hasError = true;
     }
 
     if (!lastName) {
-      document.getElementById('last-name-error').style.display = 'block';
+      document.getElementById('last-name-error').classList.add('active');
       hasError = true;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
-      document.getElementById('email-error').style.display = 'block';
+      document.getElementById('email-error').classList.add('active');
       hasError = true;
     }
 
     // Password policy: >= 8 characters, at least 1 uppercase, 1 lowercase, 1 digit
     const passwordPolicy = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!password || !passwordPolicy.test(password)) {
-      document.getElementById('password-error').style.display = 'block';
+      document.getElementById('password-error').classList.add('active');
       hasError = true;
     }
 
     if (password !== confirmPassword) {
-      document.getElementById('confirm-password-error').style.display = 'block';
+      document.getElementById('confirm-password-error').classList.add('active');
       hasError = true;
     }
 
     if (hasError) return;
 
     submitBtn.disabled = true;
-    btnText.style.display = 'none';
-    btnSpinner.style.display = 'inline-block';
+    btnText.classList.add('d-none');
+    btnSpinner.classList.remove('d-none');
 
     const fullName = `${firstName} ${lastName}`;
 
@@ -101,8 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       showAlert(err.message || 'Registration failed. The email address may already be in use.');
       submitBtn.disabled = false;
-      btnText.style.display = 'inline';
-      btnSpinner.style.display = 'none';
+      btnText.classList.remove('d-none');
+      btnSpinner.classList.add('d-none');
     }
   });
 });
