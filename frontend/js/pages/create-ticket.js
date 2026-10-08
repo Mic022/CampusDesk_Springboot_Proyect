@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSpinner = document.getElementById('btn-spinner');
 
   function clearErrors() {
-    document.querySelectorAll('.form-error-msg').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.form-error-msg').forEach(el => el.classList.remove('active'));
   }
 
   form.addEventListener('submit', async (e) => {
@@ -36,25 +36,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Validate title bounds (5 to 150 chars per API contract)
     if (!title || title.length < 5 || title.length > 150) {
-      document.getElementById('title-error').style.display = 'block';
+      document.getElementById('title-error').classList.add('active');
       hasError = true;
     }
 
     // Validate category selection
     if (!category) {
-      document.getElementById('category-error').style.display = 'block';
+      document.getElementById('category-error').classList.add('active');
       hasError = true;
     }
 
     // Validate priority selection
     if (!priority) {
-      document.getElementById('priority-error').style.display = 'block';
+      document.getElementById('priority-error').classList.add('active');
       hasError = true;
     }
 
     // Validate description bounds (10 to 2000 chars per API contract)
     if (!description || description.length < 10 || description.length > 2000) {
-      document.getElementById('desc-error').style.display = 'block';
+      document.getElementById('desc-error').classList.add('active');
       hasError = true;
     }
 
@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set loading indicator
     submitBtn.disabled = true;
-    btnText.style.display = 'none';
-    btnSpinner.style.display = 'inline-block';
+    btnText.classList.add('d-none');
+    btnSpinner.classList.remove('d-none');
 
     try {
       const newTicket = await apiFetch('/tickets', {
@@ -85,8 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       Toast.error('Submission Failed', err.message || 'Unable to register support ticket.');
       submitBtn.disabled = false;
-      btnText.style.display = 'inline';
-      btnSpinner.style.display = 'none';
+      btnText.classList.remove('d-none');
+      btnSpinner.classList.add('d-none');
     }
   });
+
+  if (window.I18n) {
+    I18n.translatePage();
+  }
 });
