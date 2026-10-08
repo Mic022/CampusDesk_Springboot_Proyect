@@ -29,7 +29,7 @@
       <nav class="sidebar-nav" id="sidebar-nav"></nav>
 
       <div class="sidebar-footer">
-        <a href="#" class="nav-link" id="sidebar-logout-btn" style="color: #fca5a5;"></a>
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
       </div>
     </aside>
 
@@ -41,12 +41,16 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <div class="header-title-box">
-            <h1>Submit Incident Request</h1>
+            <h1 data-i18n="nav_submit">Submit Incident Request</h1>
             <p>Report technical issues for diagnosis and resolution</p>
           </div>
         </div>
 
         <div class="header-right">
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
           <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
         </div>
       </header>
@@ -60,21 +64,21 @@
 
           <div class="card-body">
             <!-- Form instructions -->
-            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 24px;">
+            <p class="empty-state-desc" style="margin-bottom: 24px;">
               Please provide clear details regarding your technical problem. Your ticket will immediately enter the intake queue with initial <strong>OPEN</strong> status and be dispatched to the appropriate IT specialist.
             </p>
 
             <form id="create-ticket-form" novalidate>
               <div class="form-group">
-                <label for="ticket-title" class="form-label">Incident Title <span style="color: var(--priority-critical);">*</span></label>
+                <label for="ticket-title" class="form-label">Incident Title <span class="text-critical">*</span></label>
                 <input type="text" id="ticket-title" class="form-control" placeholder="e.g. Dual Monitor Display flickering in Workstation #12" required minlength="5" maxlength="150">
                 <div class="form-hint">Brief summary of the issue (5–150 characters).</div>
                 <div id="title-error" class="form-error-msg">Title must be between 5 and 150 characters.</div>
               </div>
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div class="dashboard-grid-even">
                 <div class="form-group">
-                  <label for="ticket-category" class="form-label">Technical Category <span style="color: var(--priority-critical);">*</span></label>
+                  <label for="ticket-category" class="form-label">Technical Category <span class="text-critical">*</span></label>
                   <select id="ticket-category" class="form-select" required>
                     <option value="" disabled selected>Select category...</option>
                     <option value="HARDWARE">HARDWARE (Monitors, laptops, peripherals)</option>
@@ -87,7 +91,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="ticket-priority" class="form-label">Operational Priority <span style="color: var(--priority-critical);">*</span></label>
+                  <label for="ticket-priority" class="form-label">Operational Priority <span class="text-critical">*</span></label>
                   <select id="ticket-priority" class="form-select" required>
                     <option value="" disabled selected>Select priority...</option>
                     <option value="LOW">LOW (Minor inconvenience, work can continue)</option>
@@ -100,16 +104,16 @@
               </div>
 
               <div class="form-group">
-                <label for="ticket-description" class="form-label">Detailed Description <span style="color: var(--priority-critical);">*</span></label>
+                <label for="ticket-description" class="form-label">Detailed Description <span class="text-critical">*</span></label>
                 <textarea id="ticket-description" class="form-control" rows="6" placeholder="Describe what happened, error codes observed, equipment labels, and steps to reproduce..." required minlength="10" maxlength="2000"></textarea>
                 <div class="form-hint">Include affected hardware IDs or software error prompts (10–2000 characters).</div>
                 <div id="desc-error" class="form-error-msg">Description must be between 10 and 2000 characters.</div>
               </div>
 
-              <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-                <a href="tickets.html" class="btn btn-secondary">Cancel</a>
+              <div class="modal-footer" style="background: none; border-top: 1px solid var(--border-color); padding: 20px 0 0 0;">
+                <a href="tickets.html" class="btn btn-secondary" data-i18n="cancel">Cancel</a>
                 <button type="submit" id="submit-ticket-btn" class="btn btn-primary btn-lg">
-                  <span id="btn-text">Submit Request</span>
+                  <span id="btn-text" data-i18n="submit_request">Submit Request</span>
                   <span id="btn-spinner" class="spinner" style="display: none; width: 18px; height: 18px; border-width: 2px;"></span>
                 </button>
               </div>
@@ -120,6 +124,8 @@
     </div>
   </div>
 
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
   <script src="../js/components.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/auth.js"></script>
