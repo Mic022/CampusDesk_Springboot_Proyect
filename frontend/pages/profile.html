@@ -25,7 +25,7 @@
       </div>
       <nav class="sidebar-nav" id="sidebar-nav"></nav>
       <div class="sidebar-footer">
-        <a href="#" class="nav-link" id="sidebar-logout-btn" style="color: #fca5a5;"></a>
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
       </div>
     </aside>
 
@@ -36,36 +36,40 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <div class="header-title-box">
-            <h1>Account Profile</h1>
+            <h1 data-i18n="nav_profile">Account Profile</h1>
             <p>Corporate identity and system authorization overview</p>
           </div>
         </div>
         <div class="header-right">
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
           <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
         </div>
       </header>
 
       <main class="page-content">
-        <div class="card" style="max-width: 680px; margin: 0 auto;">
+        <div class="card profile-card">
           <div class="card-header">
             <h3 class="card-title">Corporate User Credentials</h3>
             <span class="badge badge-status-resolved"><span class="badge-dot"></span>ACTIVE ACCOUNT</span>
           </div>
           <div class="card-body">
             <!-- Profile avatar header -->
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border-color);">
-              <div id="profile-avatar-large" style="width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 800; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);">
+            <div class="profile-header">
+              <div id="profile-avatar-large" class="profile-avatar-large">
                 UN
               </div>
               <div>
-                <h2 id="profile-name-header" style="font-size: 1.35rem; font-weight: 800; color: var(--text-main);">Loading User...</h2>
-                <span id="profile-role-badge" class="badge" style="background: var(--color-primary-light); color: var(--color-primary); font-weight: 700; margin-top: 6px;">ROLE</span>
+                <h2 id="profile-name-header" class="profile-name">Loading User...</h2>
+                <span id="profile-role-badge" class="badge profile-role-badge">ROLE</span>
               </div>
             </div>
 
             <!-- Profile Info Metadata List -->
-            <div class="metadata-list" style="gap: 20px;">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="metadata-list">
+              <div class="profile-grid-2">
                 <div class="metadata-item">
                   <span class="metadata-item-label">First Name</span>
                   <span class="metadata-item-value" id="profile-first-name">-</span>
@@ -88,15 +92,15 @@
 
               <div class="metadata-item">
                 <span class="metadata-item-label">Account Verification Status</span>
-                <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                <div class="profile-status-wrapper">
                   <span class="badge badge-status-resolved"><span class="badge-dot"></span>Active Corporate Member</span>
                 </div>
               </div>
             </div>
 
-            <div style="margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 0.8rem; color: var(--text-muted);">TechNova Solutions IAM System</span>
-              <button id="profile-logout-btn" class="btn btn-secondary btn-sm" style="color: var(--priority-critical);">
+            <div class="profile-footer">
+              <span class="profile-iam-note">TechNova Solutions IAM System</span>
+              <button id="profile-logout-btn" class="btn btn-secondary btn-sm text-critical">
                 Sign Out from CampusDesk
               </button>
             </div>
@@ -106,6 +110,8 @@
     </div>
   </div>
 
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
   <script src="../js/components.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/auth.js"></script>
