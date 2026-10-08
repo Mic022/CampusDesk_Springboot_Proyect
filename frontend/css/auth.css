@@ -181,6 +181,22 @@
   font-size: 0.88rem;
 }
 
+.auth-alert-box.active {
+  display: block;
+}
+
+.auth-alert-error {
+  background-color: var(--priority-critical-bg);
+  color: var(--priority-critical);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+}
+
+.auth-alert-success {
+  background-color: var(--status-resolved-bg);
+  color: var(--status-resolved);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+}
+
 .password-input-wrapper {
   position: relative;
 }
