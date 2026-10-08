@@ -1072,3 +1072,49 @@ a:hover {
 .text-critical { color: var(--priority-critical); }
 .text-muted { color: var(--text-muted); }
 .text-center { text-align: center; }
+
+.empty-table-cell {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 36px 18px;
+}
+
+.monospace-id {
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.card-body-flush {
+  padding: 0 !important;
+}
+
+.search-header-box {
+  position: relative;
+  max-width: 260px;
+  width: 100%;
+}
+
+.form-control-sm {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+/* Role Badges */
+.badge-role-admin {
+  background-color: var(--status-assigned-bg);
+  color: var(--status-assigned);
+  border-color: rgba(192, 132, 252, 0.3);
+}
+
+.badge-role-technician {
+  background-color: var(--status-open-bg);
+  color: var(--status-open);
+  border-color: rgba(96, 165, 250, 0.3);
+}
+
+.badge-role-employee {
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
