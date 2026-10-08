@@ -112,14 +112,14 @@
 
           <div class="card-body card-body-flush">
             <!-- Loading skeleton -->
-            <div id="tickets-skeleton" class="d-flex flex-column gap-12" style="padding: 24px;">
-              <div class="skeleton" style="height: 48px;"></div>
-              <div class="skeleton" style="height: 48px;"></div>
-              <div class="skeleton" style="height: 48px;"></div>
+            <div id="tickets-skeleton" class="d-flex flex-column gap-12 p-24">
+              <div class="skeleton skeleton-row-md"></div>
+              <div class="skeleton skeleton-row-md"></div>
+              <div class="skeleton skeleton-row-md"></div>
             </div>
 
             <!-- Data Table Container -->
-            <div id="tickets-table-container" class="table-responsive" style="display: none;">
+            <div id="tickets-table-container" class="table-responsive d-none">
               <table class="data-table responsive-cards-table">
                 <thead>
                   <tr>
@@ -140,7 +140,7 @@
             </div>
 
             <!-- Empty State -->
-            <div id="tickets-empty" class="empty-state" style="display: none;">
+            <div id="tickets-empty" class="empty-state d-none">
               <div class="empty-state-icon">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               </div>
