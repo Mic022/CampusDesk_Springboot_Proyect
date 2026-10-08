@@ -105,3 +105,31 @@ Validaciones propuestas: `title` de 5 a 150 caracteres, `description` de 10 a 20
 - [ ] ¿El ADMIN puede crear tickets?
 - [ ] Ticket ajeno: ¿403 o 404? (los dos son válidos para CP-06; elegir uno)
 - [ ] Correo duplicado: ¿409 o 400?
+
+---
+
+### Detalle: Crear un nuevo ticket (POST /api/tickets)
+- **Autenticación**: Requiere JWT (Roles: USER, TECHNICIAN, ADMIN)
+- **Descripción**: Crea un ticket nuevo. El estado inicial siempre será `ABIERTA` y el solicitante será el usuario autenticado.
+
+**Request Body**:
+```json
+{
+  "title": "No enciende el monitor",
+  "description": "El monitor del puesto 4 no enciende desde esta mañana",
+  "category": "HARDWARE",
+  "priority": "HIGH"
+}
+
+{
+  "id": 12,
+  "title": "No enciende el monitor",
+  "description": "El monitor del puesto 4 no enciende desde esta mañana",
+  "category": "HARDWARE",
+  "priority": "HIGH",
+  "status": "ABIERTA",
+  "requester": { "id": 3, "fullName": "Ana Pérez" },
+  "technician": null,
+  "createdAt": "2026-10-09T10:00:00",
+  "updatedAt": "2026-10-09T10:00:00"
+}
