@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusDesk · Submit Support Ticket | TechNova Solutions</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-wrapper">
+          <div class="brand-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <span class="brand-title">CAMPUSDESK</span>
+            <span class="brand-subtitle">TechNova</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+
+      <div class="sidebar-footer">
+        <a href="#" class="nav-link" id="sidebar-logout-btn" style="color: #fca5a5;"></a>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-left">
+          <button id="menu-toggle" class="menu-toggle-btn" aria-label="Open sidebar menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="header-title-box">
+            <h1>Submit Incident Request</h1>
+            <p>Report technical issues for diagnosis and resolution</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-header">
+            <h3 class="card-title">New Support Incident Intake</h3>
+            <span class="badge badge-status-open"><span class="badge-dot"></span>Initial State: OPEN</span>
+          </div>
+
+          <div class="card-body">
+            <!-- Form instructions -->
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 24px;">
+              Please provide clear details regarding your technical problem. Your ticket will immediately enter the intake queue with initial <strong>OPEN</strong> status and be dispatched to the appropriate IT specialist.
+            </p>
+
+            <form id="create-ticket-form" novalidate>
+              <div class="form-group">
+                <label for="ticket-title" class="form-label">Incident Title <span style="color: var(--priority-critical);">*</span></label>
+                <input type="text" id="ticket-title" class="form-control" placeholder="e.g. Dual Monitor Display flickering in Workstation #12" required minlength="5" maxlength="150">
+                <div class="form-hint">Brief summary of the issue (5–150 characters).</div>
+                <div id="title-error" class="form-error-msg">Title must be between 5 and 150 characters.</div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                  <label for="ticket-category" class="form-label">Technical Category <span style="color: var(--priority-critical);">*</span></label>
+                  <select id="ticket-category" class="form-select" required>
+                    <option value="" disabled selected>Select category...</option>
+                    <option value="HARDWARE">HARDWARE (Monitors, laptops, peripherals)</option>
+                    <option value="SOFTWARE">SOFTWARE (Operating systems, ERP, licensing)</option>
+                    <option value="NETWORK">NETWORK (VPN, Wi-Fi, Ethernet, DNS)</option>
+                    <option value="ACCESS">ACCESS (Permissions, badges, active directory)</option>
+                    <option value="OTHER">OTHER (General technical assistance)</option>
+                  </select>
+                  <div id="category-error" class="form-error-msg">Please select an issue category.</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="ticket-priority" class="form-label">Operational Priority <span style="color: var(--priority-critical);">*</span></label>
+                  <select id="ticket-priority" class="form-select" required>
+                    <option value="" disabled selected>Select priority...</option>
+                    <option value="LOW">LOW (Minor inconvenience, work can continue)</option>
+                    <option value="MEDIUM">MEDIUM (Impacting individual workflow)</option>
+                    <option value="HIGH">HIGH (Major component unusable, high urgency)</option>
+                    <option value="CRITICAL">CRITICAL (Total workflow blockage, immediate outage)</option>
+                  </select>
+                  <div id="priority-error" class="form-error-msg">Please select a priority level.</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="ticket-description" class="form-label">Detailed Description <span style="color: var(--priority-critical);">*</span></label>
+                <textarea id="ticket-description" class="form-control" rows="6" placeholder="Describe what happened, error codes observed, equipment labels, and steps to reproduce..." required minlength="10" maxlength="2000"></textarea>
+                <div class="form-hint">Include affected hardware IDs or software error prompts (10–2000 characters).</div>
+                <div id="desc-error" class="form-error-msg">Description must be between 10 and 2000 characters.</div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <a href="tickets.html" class="btn btn-secondary">Cancel</a>
+                <button type="submit" id="submit-ticket-btn" class="btn btn-primary btn-lg">
+                  <span id="btn-text">Submit Request</span>
+                  <span id="btn-spinner" class="spinner" style="display: none; width: 18px; height: 18px; border-width: 2px;"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navigation.js"></script>
+  <script src="../js/pages/create-ticket.js"></script>
+</body>
+</html>
