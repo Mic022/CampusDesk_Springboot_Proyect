@@ -1,5 +1,6 @@
 package com.technova.campusdesk.service;
 
+import com.technova.campusdesk.dto.request.TicketFilter;
 import com.technova.campusdesk.dto.request.TicketRequest;
 import com.technova.campusdesk.dto.response.TicketResponse;
 import com.technova.campusdesk.entity.Ticket;
@@ -7,8 +8,11 @@ import com.technova.campusdesk.entity.User;
 import com.technova.campusdesk.entity.enums.TicketStatus;
 import com.technova.campusdesk.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification; // <--- ¡ESTE ES EL IMPORT QUE FALTABA!
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +27,24 @@ public class TicketService {
         ticket.setDescription(request.description());
         ticket.setCategory(request.category());
         ticket.setPriority(request.priority());
-        ticket.setStatus(TicketStatus.OPEN); // <-- CAMBIO: Usar OPEN en lugar de ABIERTA
+        ticket.setStatus(TicketStatus.OPEN); // Regla de negocio: siempre inicia OPEN
         ticket.setRequester(currentUser);
+        // technician remains null until assigned
 
         Ticket savedTicket = ticketRepository.save(ticket);
 
+        // TODO Step 7: Connect StatusHistoryService.record(savedTicket, null, TicketStatus.OPEN, currentUser);
+
         return mapToResponse(savedTicket);
+    }
+
+    public List<TicketResponse> listTickets(TicketFilter filter, User currentUser) {
+        Specification<Ticket> spec = TicketSpecification.filterByRoleAndCriteria(currentUser, filter);
+        List<Ticket> tickets = ticketRepository.findAll(spec);
+        
+        return tickets.stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 
     private TicketResponse mapToResponse(Ticket ticket) {
