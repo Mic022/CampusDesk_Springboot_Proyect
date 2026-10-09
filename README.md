@@ -22,7 +22,7 @@ Actualizado el 2026-10-09.
 | Seguridad, usuarios e indicadores (P1) | DTOs de auth y usuarios, `ErrorResponse` y `GlobalExceptionHandler`. En su rama: JWT, `SecurityConfig`, registro, login, `GET /users` y `/users/technicians`, con pruebas | Resumen del dashboard (`/reports/summary`), `DataInitializer`, CORS y Swagger |
 | Tickets y reglas del negocio (P2) | DTOs de tickets, máquina de estados (`TicketTransitionPolicy`) y `POST /tickets` | Listado con filtros, detalle, edición, asignación, cambio de estado, comentarios, historial y pruebas |
 | Frontend (P3) | Interfaz de las pantallas en su rama, conectada a la API con `apiFetch` | Integración con los endpoints reales y revisión de páginas duplicadas |
-| Base de datos (P4) | Enums, entidades, repositorios, `schema.sql`, diagrama ER, PostgreSQL con Docker y pruebas de repositorios | `data.sql` |
+| Base de datos (P4) | Enums, entidades, repositorios, `schema.sql`, `data.sql`, diagrama ER, PostgreSQL con Docker y pruebas de repositorios | — |
 | Documentación y evidencias (P4) | README, contrato de la API, guía de pasos iniciales | Roles, Swagger, decisiones de diseño y evidencias |
 
 ## Tecnologías
@@ -125,7 +125,31 @@ psql -U postgres -d campusdesk -f database/schema.sql
 
 ### Datos de prueba
 
-_pendiente: `database/data.sql` (usuarios, tickets en todos los estados, comentarios e historial)._
+Hay que seguir este orden, porque `data.sql` asigna tickets a los técnicos que crea el backend:
+
+1. Base creada con `schema.sql` (con Docker se crea sola).
+2. Arrancar el backend una vez. Su `DataInitializer` crea al ADMIN y a los técnicos. Se puede arrancar las veces que sea: no los duplica.
+3. Cargar `database/data.sql`, desde la raíz del repositorio:
+
+```bash
+# Docker
+docker exec -i campusdesk-postgres psql -U postgres -d campusdesk -v ON_ERROR_STOP=1 < database/data.sql
+# PostgreSQL instalado
+psql -U postgres -d campusdesk -v ON_ERROR_STOP=1 -f database/data.sql
+```
+
+Si se ejecuta antes del paso 2, se detiene con un aviso y no inserta nada. Se puede volver a ejecutar cuando se quiera: borra y recrea los tickets de prueba, sin duplicar usuarios.
+
+| Usuario | Correo | Contraseña | Rol | Lo crea |
+|---|---|---|---|---|
+| Admin | valor de `ADMIN_EMAIL` (por defecto `admin@technova.com`) | valor de `ADMIN_PASSWORD` | ADMIN | `DataInitializer` |
+| Luis Gómez | `tech1@technova.com` | valor de `TECH_PASSWORD` | TECHNICIAN | `DataInitializer` |
+| Carla Ruiz | `tech2@technova.com` | valor de `TECH_PASSWORD` | TECHNICIAN | `DataInitializer` |
+| Ana Pérez | `ana@technova.com` | `User12345` | USER | `data.sql` |
+| Pedro Díaz | `pedro@technova.com` | `User12345` | USER | `data.sql` |
+| Sofía Torres | `sofia@technova.com` | `User12345` | USER | `data.sql` |
+
+`data.sql` crea además 9 tickets que cubren los 5 estados (2 OPEN, 2 ASSIGNED, 2 IN_PROGRESS, 1 RESOLVED, 2 CLOSED), todas las categorías y prioridades, con su historial completo de cambios de estado y comentarios. Las contraseñas de `User12345` solo valen para pruebas locales.
 
 ### Modelo de datos
 
