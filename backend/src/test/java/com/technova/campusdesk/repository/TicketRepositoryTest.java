@@ -86,6 +86,22 @@ class TicketRepositoryTest extends RepositoryTestSupport {
 	}
 
 	@Test
+	void specificationWithoutSortAlsoLoadsRequesterAndTechnician() {
+		persistTicket(ana, luis, TicketStatus.ASSIGNED, Priority.HIGH);
+		em.flush();
+		em.clear();
+
+		Specification<Ticket> assigned = (root, query, cb) -> cb.equal(root.get("status"), TicketStatus.ASSIGNED);
+
+		// Es el método que usa TicketService.listTickets: el mapper lee los nombres fuera de la transacción.
+		List<Ticket> result = ticketRepository.findAll(assigned);
+
+		assertThat(result).hasSize(1);
+		assertThat(Hibernate.isInitialized(result.get(0).getRequester())).isTrue();
+		assertThat(Hibernate.isInitialized(result.get(0).getTechnician())).isTrue();
+	}
+
+	@Test
 	void countsForDashboard() {
 		persistTicket(ana, null, TicketStatus.OPEN, Priority.LOW);
 		persistTicket(ana, luis, TicketStatus.IN_PROGRESS, Priority.MEDIUM);

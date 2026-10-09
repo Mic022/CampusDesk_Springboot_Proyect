@@ -1,5 +1,6 @@
 package com.technova.campusdesk.repository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
@@ -25,6 +26,19 @@ abstract class RepositoryTestSupport {
 
 	@Autowired
 	protected TestEntityManager em;
+
+	/**
+	 * La base H2 se comparte con otras pruebas (por ejemplo, el DataInitializer crea ADMIN y técnicos
+	 * al arrancar la aplicación completa). Se vacía al empezar cada prueba para que no dependa del orden;
+	 * el borrado se deshace al terminar, junto con la transacción de la prueba.
+	 */
+	@BeforeEach
+	void startWithEmptyTables() {
+		em.getEntityManager().createQuery("DELETE FROM Comment").executeUpdate();
+		em.getEntityManager().createQuery("DELETE FROM StatusHistory").executeUpdate();
+		em.getEntityManager().createQuery("DELETE FROM Ticket").executeUpdate();
+		em.getEntityManager().createQuery("DELETE FROM User").executeUpdate();
+	}
 
 	protected User persistUser(String fullName, String email, Role role) {
 		return em.persist(User.builder()
