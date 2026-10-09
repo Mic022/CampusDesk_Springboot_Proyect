@@ -11,6 +11,7 @@ import com.technova.campusdesk.exception.BusinessRuleException;
 import com.technova.campusdesk.exception.ForbiddenException;
 import com.technova.campusdesk.exception.ResourceNotFoundException;
 import com.technova.campusdesk.repository.TicketRepository;
+import com.technova.campusdesk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,16 @@ import java.util.List;
 public class TicketService {
 
     private final TicketRepository ticketRepository;
-    private final StatusHistoryService statusHistoryService; // <-- NUEVO
+    private final UserRepository userRepository;
+    private final StatusHistoryService statusHistoryService;
 
     @Transactional
     public TicketResponse createTicket(TicketRequest request, User currentUser) {
+        // Validación: TECHNICIAN no puede crear tickets
+        if (currentUser.getRole() == Role.TECHNICIAN) {
+            throw new ForbiddenException("Los técnicos no pueden crear tickets, solo trabajarlos.");
+        }
+
         Ticket ticket = new Ticket();
         ticket.setTitle(request.title());
         ticket.setDescription(request.description());
@@ -36,8 +43,6 @@ public class TicketService {
         ticket.setRequester(currentUser);
 
         Ticket savedTicket = ticketRepository.save(ticket);
-
-        // PASO 7: Conectar el historial de estados a la creación
         statusHistoryService.record(savedTicket, null, TicketStatus.OPEN, currentUser);
 
         return mapToResponse(savedTicket);
@@ -91,6 +96,48 @@ public class TicketService {
         ticket.setPriority(request.priority());
 
         Ticket updatedTicket = ticketRepository.save(ticket);
+        return mapToResponse(updatedTicket);
+    }
+
+    @Transactional
+    public TicketResponse assignTicket(Long id, Long technicianId, User currentUser) {
+        if (currentUser.getRole() != Role.ADMIN) {
+            throw new ForbiddenException("Solo un ADMIN puede asignar tickets.");
+        }
+
+        Ticket ticket = getAccessibleTicket(id, currentUser);
+
+        User technician = userRepository.findById(technicianId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + technicianId));
+
+        if (technician.getRole() != Role.TECHNICIAN) {
+            throw new BusinessRuleException("El usuario destino debe tener rol TECHNICIAN.");
+        }
+
+        TicketStatus oldStatus = ticket.getStatus();
+        ticket.setTechnician(technician);
+        
+        TicketTransitionPolicy.validateTransition(oldStatus, TicketStatus.ASSIGNED, currentUser.getRole());
+        ticket.setStatus(TicketStatus.ASSIGNED);
+
+        Ticket updatedTicket = ticketRepository.save(ticket);
+        statusHistoryService.record(updatedTicket, oldStatus, TicketStatus.ASSIGNED, currentUser);
+
+        return mapToResponse(updatedTicket);
+    }
+
+    @Transactional
+    public TicketResponse updateTicketStatus(Long id, TicketStatus newStatus, User currentUser) {
+        Ticket ticket = getAccessibleTicket(id, currentUser);
+        TicketStatus oldStatus = ticket.getStatus();
+
+        TicketTransitionPolicy.validateTransition(oldStatus, newStatus, currentUser.getRole());
+
+        ticket.setStatus(newStatus);
+        Ticket updatedTicket = ticketRepository.save(ticket);
+        
+        statusHistoryService.record(updatedTicket, oldStatus, newStatus, currentUser);
+
         return mapToResponse(updatedTicket);
     }
 

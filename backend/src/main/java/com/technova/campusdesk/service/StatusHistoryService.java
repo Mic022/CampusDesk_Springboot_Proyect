@@ -7,7 +7,6 @@ import com.technova.campusdesk.entity.enums.TicketStatus;
 import com.technova.campusdesk.repository.StatusHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -16,14 +15,13 @@ public class StatusHistoryService {
 
     private final StatusHistoryRepository statusHistoryRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void record(Ticket ticket, TicketStatus previousStatus, TicketStatus newStatus, User changedBy) {
         StatusHistory history = new StatusHistory();
         history.setTicket(ticket);
         history.setPreviousStatus(previousStatus);
         history.setNewStatus(newStatus);
         history.setChangedBy(changedBy);
-        // El campo createdAt se llena automáticamente por la entidad (si tiene @PrePersist) o por defecto
         
         statusHistoryRepository.save(history);
     }
