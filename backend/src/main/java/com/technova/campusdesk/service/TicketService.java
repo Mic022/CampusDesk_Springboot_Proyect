@@ -23,6 +23,7 @@ import java.util.List;
 public class TicketService {
 
     private final TicketRepository ticketRepository;
+    private final StatusHistoryService statusHistoryService; // <-- NUEVO
 
     @Transactional
     public TicketResponse createTicket(TicketRequest request, User currentUser) {
@@ -35,6 +36,9 @@ public class TicketService {
         ticket.setRequester(currentUser);
 
         Ticket savedTicket = ticketRepository.save(ticket);
+
+        // PASO 7: Conectar el historial de estados a la creación
+        statusHistoryService.record(savedTicket, null, TicketStatus.OPEN, currentUser);
 
         return mapToResponse(savedTicket);
     }
