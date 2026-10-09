@@ -17,12 +17,17 @@ import com.technova.campusdesk.entity.enums.TicketStatus;
  * con la visibilidad según el rol (ADMIN todos, TECHNICIAN asignados, USER propios).
  * El EntityGraph carga requester y technician en la misma consulta: con open-in-view en false,
  * sin él el mapper fallaría con LazyInitializationException.
+ * No quitar métodos sin avisar a Persona 4: los usan TicketService, ReportService y las pruebas.
  */
 public interface TicketRepository extends JpaRepository<Ticket, Long>, JpaSpecificationExecutor<Ticket> {
 
 	@Override
 	@EntityGraph(attributePaths = { "requester", "technician" })
 	Optional<Ticket> findById(Long id);
+
+	@Override
+	@EntityGraph(attributePaths = { "requester", "technician" })
+	List<Ticket> findAll(Specification<Ticket> spec);
 
 	@Override
 	@EntityGraph(attributePaths = { "requester", "technician" })

@@ -56,7 +56,7 @@ En GitHub: **Settings → Collaborators** y agregar a los otros tres.
 git clone https://github.com/Mic022/CampusDesk_Springboot_Proyect.git
 cd CampusDesk_Springboot_Proyect
 git checkout develop
-git checkout -b Dev<Nombre>               # ej.: DevMic, DevSergy
+git checkout -b Dev<Nombre>               # DevJonatan · DevNic · DevSergy · DevMic
 git push -u origin Dev<Nombre>
 ```
 
@@ -64,7 +64,7 @@ git push -u origin Dev<Nombre>
 
 - `main`: versión estable para la entrega. Solo recibe merges desde `develop`.
 - `develop`: integración del equipo. Solo recibe pull requests desde las ramas personales.
-- `Dev<Nombre>`: rama de trabajo de cada integrante, dentro de su zona (ver README). Nadie hace push directo a `develop` ni a `main`.
+- `Dev<Nombre>`: rama de trabajo de cada integrante, dentro de su zona: `DevJonatan` (Persona 1), `DevNic` (Persona 2), `DevSergy` (Persona 3) y `DevMic` (Persona 4). Nadie hace push directo a `develop` ni a `main`.
 
 Antes de abrir un pull request, traer lo último de `develop` para resolver conflictos en la rama propia:
 
