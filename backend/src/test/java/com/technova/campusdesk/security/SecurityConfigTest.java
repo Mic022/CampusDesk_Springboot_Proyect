@@ -3,8 +3,10 @@ package com.technova.campusdesk.security;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -56,6 +58,25 @@ class SecurityConfigTest {
 	@Test
 	void authRoutesArePublic() throws Exception {
 		mockMvc.perform(post("/api/auth/ping")).andExpect(status().isOk());
+	}
+
+	@Test
+	void corsPreflightFromLiveServerIsAllowed() throws Exception {
+		mockMvc.perform(options("/api/tickets/me")
+				.header("Origin", "http://127.0.0.1:5500")
+				.header("Access-Control-Request-Method", "GET")
+				.header("Access-Control-Request-Headers", "Authorization"))
+				.andExpect(status().isOk())
+				.andExpect(header().string("Access-Control-Allow-Origin", "http://127.0.0.1:5500"));
+	}
+
+	@Test
+	void corsPreflightFromUnknownOriginIsRejected() throws Exception {
+		mockMvc.perform(options("/api/tickets/me")
+				.header("Origin", "http://evil.example.com")
+				.header("Access-Control-Request-Method", "GET"))
+				.andExpect(status().isForbidden())
+				.andExpect(header().doesNotExist("Access-Control-Allow-Origin"));
 	}
 
 	@Test
