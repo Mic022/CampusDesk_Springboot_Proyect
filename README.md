@@ -17,13 +17,13 @@ Plataforma web de gestión de incidencias tecnológicas para TechNova Solutions:
 
 Actualizado el 2026-10-09.
 
-| Zona | Hecho | Pendiente |
+| Zona | Hecho (en `develop`) | Pendiente |
 |---|---|---|
-| Seguridad, usuarios e indicadores (P1) | DTOs de auth y usuarios, `ErrorResponse` y `GlobalExceptionHandler`. En su rama: JWT, `SecurityConfig`, registro, login, `GET /users` y `/users/technicians`, con pruebas | Resumen del dashboard (`/reports/summary`), `DataInitializer`, CORS y Swagger |
-| Tickets y reglas del negocio (P2) | DTOs de tickets, máquina de estados (`TicketTransitionPolicy`) y `POST /tickets` | Listado con filtros, detalle, edición, asignación, cambio de estado, comentarios, historial y pruebas |
-| Frontend (P3) | Interfaz de las pantallas en su rama, conectada a la API con `apiFetch` | Integración con los endpoints reales y revisión de páginas duplicadas |
-| Base de datos (P4) | Enums, entidades, repositorios, `schema.sql`, `data.sql`, diagrama ER, PostgreSQL con Docker y pruebas de repositorios | — |
-| Documentación y evidencias (P4) | README, contrato de la API, guía de pasos iniciales | Roles, Swagger, decisiones de diseño y evidencias |
+| Seguridad, usuarios e indicadores (P1) | JWT, `SecurityConfig`, registro, login, `GET /users`, `GET /users/technicians`, `GET /reports/summary`, `DataInitializer`, CORS, Swagger y manejo de errores, con pruebas | — |
+| Tickets y reglas del negocio (P2) | Máquina de estados, `POST /tickets`, `GET /tickets` con filtros, `GET` y `PUT /tickets/{id}`, historial al crear | Asignación, cambio de estado, comentarios, consulta del historial, pruebas. Corrección de creación de tickets en su rama, sin fusionar |
+| Frontend (P3) | Interfaz de las pantallas en su rama | Fusionar, conectar con los endpoints reales y revisar páginas duplicadas |
+| Base de datos (P4) | Enums, entidades, repositorios, `schema.sql`, `data.sql`, diagrama ER, PostgreSQL con Docker | — |
+| Pruebas y documentación (P4) | Pruebas de repositorios y de la API de tickets, README, contrato de la API | Pruebas de asignación, estados y comentarios (cuando estén), evidencias |
 
 ## Tecnologías
 
@@ -176,24 +176,64 @@ Desde la carpeta `backend/`:
 
 Las pruebas usan el perfil `test` (`src/test/resources/application-test.yml`): una base H2 en memoria en modo PostgreSQL, así que no necesitan PostgreSQL, Docker ni el archivo `.env`. Cargan el mismo `database/schema.sql` y validan las entidades contra él: si el esquema y las entidades dejan de coincidir, las pruebas fallan.
 
-| Clase | Qué prueba |
-|---|---|
-| `CampusDeskApplicationTests` | Que la aplicación arranca |
-| `UserRepositoryTest` | Búsqueda por correo, correo duplicado rechazado, técnicos ordenados por nombre |
-| `TicketRepositoryTest` | Estado inicial `OPEN`, carga de solicitante y técnico, filtros combinados, conteos del dashboard |
-| `TicketActivityRepositoryTest` | Comentarios e historial en orden cronológico, con su autor |
+| Área | Clases | Qué prueban |
+|---|---|---|
+| API de tickets, de punta a punta | `TicketApiIntegrationTest` | Petición HTTP con JWT real hasta la base: visibilidad por rol, filtros, detalle (403 y 404), creación, edición y validaciones, según el contrato |
+| Seguridad y autenticación | `SecurityConfigTest`, `JwtServiceTest`, `JwtAuthenticationFilterTest`, `SecurityUtilsTest`, `AuthControllerTest`, `AuthServiceTest`, `RegisterRequestTest` | Token, 401 y 403, registro, login y política de contraseña |
+| Usuarios e indicadores | `UserControllerTest`, `UserServiceTest`, `ReportControllerTest`, `ReportServiceTest` | Listados solo para ADMIN y conteos por rol |
+| Reglas de tickets | `TicketTransitionPolicyTest` | Transiciones de estado permitidas y prohibidas |
+| Repositorios | `UserRepositoryTest`, `TicketRepositoryTest`, `TicketActivityRepositoryTest` | Consultas, carga de relaciones, conteos y orden cronológico |
+| Configuración y errores | `CampusDeskApplicationTests`, `DataInitializerTest`, `OpenApiConfigTest`, `GlobalExceptionHandlerTest` | Arranque, usuarios iniciales, Swagger y formato de error |
 
-_pendiente: pruebas de los servicios y de la API (reglas de negocio, permisos por rol y transiciones de estado)._
+Dos pruebas de `TicketApiIntegrationTest` están desactivadas con `@Disabled` hasta que se fusione una corrección de Persona 2: la creación de tickets (hoy responde 409) y el bloqueo de creación para TECHNICIAN.
 
 ## Roles
 
-_pendiente: qué puede hacer ADMIN, TECHNICIAN y USER, y cómo se crean las cuentas de ADMIN y técnicos._
+| Rol | Qué puede hacer |
+|---|---|
+| ADMIN | Ver todos los tickets, asignar un técnico, ver la lista de usuarios y de técnicos, ver el dashboard con todos los tickets, y ver el historial y comentar en cualquier ticket. |
+| TECHNICIAN | Ver los tickets que tiene asignados, pasarlos a `IN_PROGRESS` y `RESOLVED`, comentar en ellos y ver el dashboard de sus tickets asignados. No crea tickets. |
+| USER | Crear tickets, editarlos mientras estén en `OPEN` y sin técnico, cerrarlos (`CLOSED`) cuando estén resueltos, comentar y ver el dashboard de sus propios tickets. |
+
+Asignar, cambiar de estado, comentar y consultar el historial todavía no están implementados (Persona 2). Si el ADMIN puede crear tickets está por decidir (ver "Decisiones de diseño").
+
+### Cómo se crean las cuentas
+
+- **USER:** cualquiera se registra desde la pantalla de registro (`POST /api/auth/register`). El registro siempre crea el rol USER, aunque se intente enviar otro.
+- **ADMIN y técnicos:** los crea el backend al arrancar (`DataInitializer`), solo si todavía no existen:
+
+| Cuenta | Correo | Contraseña |
+|---|---|---|
+| ADMIN | valor de `ADMIN_EMAIL` (por defecto `admin@technova.com`) | `ADMIN_PASSWORD` |
+| Técnico: Luis Gómez | `tech1@technova.com` | `TECH_PASSWORD` |
+| Técnico: Carla Ruiz | `tech2@technova.com` | `TECH_PASSWORD` |
+
+Las contraseñas salen de `backend/.env` y nunca se guardan en el repositorio. Si falta alguna, el backend no arranca y dice cuál variable falta. Se puede arrancar las veces que se quiera: no crea a nadie dos veces.
+
+Todas las contraseñas se guardan cifradas con BCrypt. Los correos se guardan en minúsculas, así que el inicio de sesión no distingue mayúsculas en el correo.
 
 ## Swagger
 
-Con el backend en marcha: `http://localhost:8080/swagger-ui.html`.
+Con el backend corriendo, abrir **http://localhost:8080/swagger-ui.html**.
 
-_pendiente: cómo usar el botón Authorize con el token JWT (cuando esté la seguridad de Persona 1)._
+Las rutas `/api/auth/register` y `/api/auth/login` son públicas. Para todas las demás hace falta el token:
+
+1. Abrir `POST /api/auth/login`, pulsar **Try it out** y enviar:
+   ```json
+   { "email": "admin@technova.com", "password": "<tu ADMIN_PASSWORD>" }
+   ```
+2. Copiar el valor de `token` de la respuesta.
+3. Pulsar el botón **Authorize** (arriba a la derecha), pegar el token **sin** escribir `Bearer` y pulsar **Authorize**.
+4. Desde ese momento todas las peticiones de Swagger llevan el token.
+
+El token dura 1 hora (`JWT_EXPIRATION_MS`). Si vence, las rutas privadas responden 401 y hay que volver a hacer login. Para probar otro rol, inicia sesión con esa cuenta y vuelve a pulsar **Authorize** con el nuevo token.
+
+| Respuesta | Significa |
+|---|---|
+| 401 | Falta el token, está vencido o es inválido |
+| 403 | El token es válido, pero tu rol no tiene permiso (por ejemplo, un USER en `/api/users`) |
+
+La especificación en JSON está en `http://localhost:8080/v3/api-docs`.
 
 ## Decisiones de diseño
 
@@ -201,8 +241,18 @@ _pendiente: cómo usar el botón Authorize con el token JWT (cuando esté la seg
 - Los enums se guardan como texto y la base los restringe con `CHECK`.
 - La tabla de usuarios se llama `users` porque `user` es palabra reservada en PostgreSQL.
 - Las tablas las crea `database/schema.sql`, no Hibernate: así el esquema queda versionado y revisado.
+- Los correos se guardan en minúsculas: el backend los normaliza al registrar y al iniciar sesión.
+- Las contraseñas se guardan con BCrypt. La política es de 8 a 72 caracteres, con al menos una mayúscula, una minúscula y un número.
+- Las cuentas ADMIN y TECHNICIAN no se registran por la API: las crea el `DataInitializer` con contraseñas del `.env`.
 
-_pendiente: las decisiones sobre los puntos ambiguos del enunciado (ver "Decisiones pendientes" en `docs/api-contract.md`)._
+Puntos ambiguos del enunciado (ver "Decisiones pendientes" en `docs/api-contract.md`):
+
+| Punto | Comportamiento actual | Estado |
+|---|---|---|
+| Ticket de otro usuario | 403 | Implementado, falta confirmarlo |
+| Correo duplicado al registrarse | 409 | Implementado, falta confirmarlo |
+| ¿El ADMIN puede crear tickets? | Hoy sí puede | Por decidir |
+| ¿Se puede reasignar en `IN_PROGRESS`? | Sin implementar | Por decidir |
 
 ## Evidencias
 
