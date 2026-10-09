@@ -109,10 +109,12 @@ Validaciones propuestas: `title` de 5 a 150 caracteres, `description` de 10 a 20
 ---
 
 ### Detalle: Crear un nuevo ticket (POST /api/tickets)
-- **Autenticación**: Requiere JWT (Roles: USER, TECHNICIAN, ADMIN)
-- **Descripción**: Crea un ticket nuevo. El estado inicial siempre será `ABIERTA` y el solicitante será el usuario autenticado.
 
-**Request Body**:
+- **Autenticación:** requiere JWT de un USER. Un TECHNICIAN recibe 403. Si el ADMIN puede crear tickets está en "Decisiones pendientes".
+- **Descripción:** crea un ticket nuevo. El estado inicial siempre es `OPEN`, el solicitante es el usuario autenticado y se guarda el primer registro del historial (`null → OPEN`).
+
+**Request body:**
+
 ```json
 {
   "title": "No enciende el monitor",
@@ -120,16 +122,21 @@ Validaciones propuestas: `title` de 5 a 150 caracteres, `description` de 10 a 20
   "category": "HARDWARE",
   "priority": "HIGH"
 }
+```
 
+**Respuesta 201:**
+
+```json
 {
   "id": 12,
   "title": "No enciende el monitor",
   "description": "El monitor del puesto 4 no enciende desde esta mañana",
   "category": "HARDWARE",
   "priority": "HIGH",
-  "status": "ABIERTA",
+  "status": "OPEN",
   "requester": { "id": 3, "fullName": "Ana Pérez" },
   "technician": null,
   "createdAt": "2026-10-09T10:00:00",
   "updatedAt": "2026-10-09T10:00:00"
 }
+```
