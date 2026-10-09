@@ -24,6 +24,7 @@ public class TicketController {
 
     private final TicketService ticketService;
 
+    // PASO 3: Crear ticket
     @PostMapping
     public ResponseEntity<TicketResponse> createTicket(@Valid @RequestBody TicketRequest request) {
         User currentUser = SecurityUtils.getCurrentUser(); 
@@ -31,6 +32,7 @@ public class TicketController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    // PASO 4: Listar tickets con filtros
     @GetMapping
     public ResponseEntity<List<TicketResponse>> listTickets(
             @RequestParam(required = false) TicketStatus status,
@@ -42,6 +44,25 @@ public class TicketController {
         List<TicketResponse> tickets = ticketService.listTickets(filter, currentUser);
         return ResponseEntity.ok(tickets);
     }
+
+    // PASO 5: Detalle del ticket
+    @GetMapping("/{id}")
+    public ResponseEntity<TicketResponse> getTicketById(@PathVariable Long id) {
+        User currentUser = SecurityUtils.getCurrentUser();
+        TicketResponse ticket = ticketService.getTicketById(id, currentUser);
+        return ResponseEntity.ok(ticket);
+    }
+
+    // PASO 6: Editar ticket
+    @PutMapping("/{id}")
+    public ResponseEntity<TicketResponse> updateTicket(
+            @PathVariable Long id,
+            @Valid @RequestBody TicketRequest request
+    ) {
+        User currentUser = SecurityUtils.getCurrentUser();
+        TicketResponse updatedTicket = ticketService.updateTicket(id, request, currentUser);
+        return ResponseEntity.ok(updatedTicket);
+    }
     
-    // TODO Steps 5-11: Add GET by ID, PUT, PATCH assign, PATCH status, comments, and history endpoints
+    // TODO Pasos 8-11: Asignar, cambiar estado, historial y comentarios
 }
