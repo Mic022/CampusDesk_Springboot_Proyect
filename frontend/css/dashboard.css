@@ -1,0 +1,371 @@
+/**
+ * CampusDesk Dashboard Styles
+ * Indicator KPI cards, pure SVG chart wrappers, and multi-role dashboard widgets.
+ */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.kpi-card {
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-focus);
+}
+
+.kpi-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.kpi-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.kpi-icon-wrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-subtle);
+  color: var(--color-primary);
+}
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.kpi-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.trend-up { color: var(--status-resolved); }
+.trend-neutral { color: var(--text-muted); }
+.trend-warning { color: var(--priority-high); }
+
+/* Semantic KPI status accents */
+.icon-open, .val-open { color: var(--status-open); }
+.icon-assigned, .val-assigned { color: var(--status-assigned); }
+.icon-progress, .val-progress { color: var(--status-in-progress); }
+.icon-resolved, .val-resolved { color: var(--status-resolved); }
+.icon-closed, .val-closed { color: var(--status-closed); }
+
+/* Header badges and card utilities */
+.card-header-badge {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.card-body-flush {
+  padding: 0;
+}
+
+.text-unassigned {
+  color: var(--priority-high);
+  font-weight: 600;
+}
+
+/* User Callout Banner */
+.user-banner-cta {
+  background: radial-gradient(circle at 10% 20%, rgba(192, 132, 252, 0.3) 0%, transparent 60%),
+              linear-gradient(135deg, #4c1d95 0%, #7e22ce 50%, #9333ea 100%);
+  border-radius: var(--radius-md);
+  padding: 24px 28px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  box-shadow: 0 8px 28px -6px rgba(147, 51, 234, 0.55);
+}
+
+.user-banner-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: #ffffff;
+}
+
+.user-banner-sub {
+  font-size: 0.92rem;
+  color: #f3e8ff;
+}
+
+.btn-banner {
+  background: #ffffff;
+  color: #581c87;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.btn-banner:hover {
+  background: #f5f3ff;
+  color: #4c1d95;
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.45);
+}
+
+/* Dashboard multi-column layout */
+.dashboard-grid-two-col {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.dashboard-grid-even {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* Pure CSS/SVG Chart Containers */
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px 0;
+}
+
+.chart-svg-wrapper {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-donut-svg {
+  transform: rotate(-90deg);
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.legend-color-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.chart-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 10px 0;
+}
+
+.chart-bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.chart-bar-track {
+  height: 10px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.chart-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+}
+
+/* Activity feed widget */
+.activity-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.activity-feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.activity-feed-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.activity-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.activity-details {
+  flex: 1;
+}
+
+.activity-title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.activity-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Technicians list roster widget */
+.tech-roster-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tech-roster-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+}
+
+.tech-roster-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tech-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--status-resolved);
+}
+
+.tech-roster-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.tech-roster-email {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Category Statistics Grid */
+.category-breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.category-stat-card {
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+}
+
+.category-stat-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.category-stat-count {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 6px 0;
+}
+
+.category-stat-sub {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* KPI Status Colors */
+.kpi-open { color: var(--status-open) !important; }
+.kpi-assigned { color: var(--status-assigned) !important; }
+.kpi-in-progress { color: var(--status-in-progress) !important; }
+.kpi-resolved { color: var(--status-resolved) !important; }
+.kpi-closed { color: var(--status-closed) !important; }
+.kpi-critical { color: var(--priority-critical) !important; }
+
+/* Legend & Priority Colors */
+.legend-color-open { background-color: var(--status-open); }
+.legend-color-assigned { background-color: var(--status-assigned); }
+.legend-color-in-progress { background-color: var(--status-in-progress); }
+.legend-color-resolved { background-color: var(--status-resolved); }
+.legend-color-closed { background-color: var(--status-closed); }
+
+.bg-priority-low { background-color: var(--priority-low); }
+.bg-priority-medium { background-color: var(--priority-medium); }
+.bg-priority-high { background-color: var(--priority-high); }
+.bg-priority-critical { background-color: var(--priority-critical); }
+

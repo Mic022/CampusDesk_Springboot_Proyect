@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusDesk · Incident Tickets | TechNova Solutions</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-wrapper">
+          <div class="brand-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <span class="brand-title">CAMPUSDESK</span>
+            <span class="brand-subtitle">TechNova</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+
+      <div class="sidebar-footer">
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-left">
+          <button id="menu-toggle" class="menu-toggle-btn" aria-label="Open sidebar menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="header-title-box">
+            <h1 id="tickets-view-title" data-i18n="nav_tickets">Incident Desk</h1>
+            <p id="tickets-view-desc">Monitor, filter, and track technical issue lifecycles</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
+          <a href="create-ticket.html" class="btn btn-primary" id="top-create-btn" data-i18n="new_request">+ New Request</a>
+          <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <!-- Filter & Search Toolbar -->
+        <div class="tickets-filter-bar">
+          <div class="filter-controls-group">
+            <!-- Search Input -->
+            <div class="search-input-wrapper">
+              <span class="search-icon-inside">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </span>
+              <input type="text" id="filter-search" class="form-control" placeholder="Search by ID or title..." data-i18n-placeholder="search_placeholder">
+            </div>
+
+            <!-- Status Filter -->
+            <select id="filter-status" class="form-select filter-select">
+              <option value="" data-i18n="all_statuses">All Statuses</option>
+              <option value="OPEN">OPEN</option>
+              <option value="ASSIGNED">ASSIGNED</option>
+              <option value="IN_PROGRESS">IN PROGRESS</option>
+              <option value="RESOLVED">RESOLVED</option>
+              <option value="CLOSED">CLOSED</option>
+            </select>
+
+            <!-- Priority Filter -->
+            <select id="filter-priority" class="form-select filter-select">
+              <option value="" data-i18n="all_priorities">All Priorities</option>
+              <option value="LOW">LOW</option>
+              <option value="MEDIUM">MEDIUM</option>
+              <option value="HIGH">HIGH</option>
+              <option value="CRITICAL">CRITICAL</option>
+            </select>
+
+            <!-- Category Filter -->
+            <select id="filter-category" class="form-select filter-select">
+              <option value="" data-i18n="all_categories">All Categories</option>
+              <option value="HARDWARE">HARDWARE</option>
+              <option value="SOFTWARE">SOFTWARE</option>
+              <option value="NETWORK">NETWORK</option>
+              <option value="ACCESS">ACCESS</option>
+              <option value="OTHER">OTHER</option>
+            </select>
+          </div>
+
+          <div>
+            <button id="btn-reset-filters" class="btn btn-secondary" data-i18n="reset_filters">Reset Filters</button>
+          </div>
+        </div>
+
+        <!-- Tickets List Card -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title" id="tickets-count-badge">Loading incidents...</h3>
+            <span class="card-header-badge">Real-time tracking</span>
+          </div>
+
+          <div class="card-body card-body-flush">
+            <!-- Loading skeleton -->
+            <div id="tickets-skeleton" class="d-flex flex-column gap-12 p-24">
+              <div class="skeleton skeleton-row-md"></div>
+              <div class="skeleton skeleton-row-md"></div>
+              <div class="skeleton skeleton-row-md"></div>
+            </div>
+
+            <!-- Data Table Container -->
+            <div id="tickets-table-container" class="table-responsive d-none">
+              <table class="data-table responsive-cards-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Assigned Tech</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="tickets-table-body">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="tickets-empty" class="empty-state d-none">
+              <div class="empty-state-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <div class="empty-state-title">No matching tickets found</div>
+              <div class="empty-state-desc">Try clearing your search query or adjusting your filters to locate the incident.</div>
+              <button id="empty-clear-btn" class="btn btn-secondary" data-i18n="reset_filters">Clear Filters</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navigation.js"></script>
+  <script src="../js/pages/tickets.js"></script>
+</body>
+</html>

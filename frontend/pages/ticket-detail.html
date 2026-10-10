@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusDesk · Incident Inspection | TechNova Solutions</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-wrapper">
+          <div class="brand-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <span class="brand-title">CAMPUSDESK</span>
+            <span class="brand-subtitle">TechNova</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+
+      <div class="sidebar-footer">
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-left">
+          <button id="menu-toggle" class="menu-toggle-btn" aria-label="Open sidebar menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="header-title-box">
+            <h1 id="ticket-header-id">Incident Details</h1>
+            <p>Comprehensive issue lifecycle, technical discussion, and audit log</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
+          <a href="tickets.html" class="btn btn-secondary btn-sm">← Back to Queue</a>
+          <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <!-- Skeleton Loading State -->
+        <div id="detail-skeleton" class="d-flex flex-column gap-20">
+          <div class="skeleton skeleton-card-banner"></div>
+          <div class="detail-grid-layout">
+            <div class="skeleton skeleton-card-tall"></div>
+            <div class="skeleton skeleton-card-tall"></div>
+          </div>
+        </div>
+
+        <!-- Main Detail Content (Populated Dynamically) -->
+        <div id="detail-container" class="d-none">
+          <!-- Top Card: Header & Interactive Lifecycle Stepper -->
+          <div class="detail-header-card">
+            <div class="detail-title-row">
+              <div class="detail-title-group">
+                <span class="ticket-id-tag" id="detail-id-tag">#TK-0000</span>
+                <h2 id="detail-title">Loading incident title...</h2>
+              </div>
+              <div class="detail-badge-group">
+                <span id="detail-category-badge" class="ticket-category-tag badge">CATEGORY</span>
+                <span id="detail-priority-badge"></span>
+                <span id="detail-status-badge"></span>
+              </div>
+            </div>
+
+            <!-- Visual Lifecycle Stepper -->
+            <div class="workflow-stepper-wrapper">
+              <div class="kpi-label" data-i18n="workflow_tag">Lifecycle Progress</div>
+              <div class="lifecycle-stepper" id="lifecycle-stepper">
+                <div class="stepper-progress-bar">
+                  <div class="stepper-progress-fill w-0" id="stepper-fill"></div>
+                </div>
+
+                <div class="lifecycle-step" id="step-OPEN">
+                  <div class="step-node">1</div>
+                  <div class="step-label" data-i18n="step_open_name">Open</div>
+                </div>
+                <div class="lifecycle-step" id="step-ASSIGNED">
+                  <div class="step-node">2</div>
+                  <div class="step-label" data-i18n="step_assigned_name">Assigned</div>
+                </div>
+                <div class="lifecycle-step" id="step-IN_PROGRESS">
+                  <div class="step-node">3</div>
+                  <div class="step-label" data-i18n="step_progress_name">In Progress</div>
+                </div>
+                <div class="lifecycle-step" id="step-RESOLVED">
+                  <div class="step-node">4</div>
+                  <div class="step-label" data-i18n="step_resolved_name">Resolved</div>
+                </div>
+                <div class="lifecycle-step" id="step-CLOSED">
+                  <div class="step-node">5</div>
+                  <div class="step-label" data-i18n="step_closed_name">Closed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-Column Layout: Left Content, Right Metadata & Actions -->
+          <div class="detail-grid-layout">
+            <!-- Left Column: Description, Discussion, and Audit Trail -->
+            <div class="d-flex flex-column gap-24">
+              <!-- Reported Problem Description -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Problem Description</h3>
+                  <span id="detail-date-reported" class="card-header-badge"></span>
+                </div>
+                <div class="card-body">
+                  <p id="detail-description-body" class="detail-description-text"></p>
+                </div>
+              </div>
+
+              <!-- Conversation & Comments Section -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Technical Conversation</h3>
+                  <span id="comments-count-badge" class="badge badge-priority-medium">0 Comments</span>
+                </div>
+                <div class="card-body">
+                  <div class="comments-thread" id="comments-thread">
+                    <!-- Injected dynamically -->
+                  </div>
+
+                  <!-- Comment Input Box -->
+                  <div id="comment-input-area" class="comment-input-container">
+                    <div class="form-group">
+                      <label for="new-comment-text" class="form-label">Add Note or Update</label>
+                      <textarea id="new-comment-text" class="form-control" rows="3" placeholder="Provide diagnostic details, questions for the requester, or resolution notes..."></textarea>
+                    </div>
+                    <div class="d-flex justify-end">
+                      <button id="post-comment-btn" class="btn btn-primary">
+                        <span>Post Comment</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Closed ticket notice banner -->
+                  <div id="comment-closed-notice" class="comment-closed-banner d-none">
+                    This incident is CLOSED. Further comments are disabled.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Status History Audit Trail -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Audit History Log</h3>
+                  <span class="card-header-badge">Immutable Traceability</span>
+                </div>
+                <div class="card-body">
+                  <div class="history-timeline" id="history-timeline">
+                    <!-- Injected dynamically -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Metadata & Role Actions Panel -->
+            <div class="d-flex flex-column gap-24">
+              <!-- Role Actions Control Panel -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Workflow Actions</h3>
+                  <span class="card-header-badge">Role Controls</span>
+                </div>
+                <div class="card-body" id="role-actions-panel">
+                  <!-- Dynamically populated per user role and current status -->
+                </div>
+              </div>
+
+              <!-- General Information Sidebar Card -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Incident Information</h3>
+                </div>
+                <div class="card-body">
+                  <div class="metadata-list">
+                    <div class="metadata-item">
+                      <span class="metadata-item-label">Requester</span>
+                      <span class="metadata-item-value" id="meta-requester-name">-</span>
+                    </div>
+
+                    <div class="metadata-item">
+                      <span class="metadata-item-label">Assigned Technician</span>
+                      <span class="metadata-item-value" id="meta-technician-name">-</span>
+                    </div>
+
+                    <div class="metadata-item">
+                      <span class="metadata-item-label">Submitted On</span>
+                      <span class="metadata-item-value" id="meta-created-at">-</span>
+                    </div>
+
+                    <div class="metadata-item">
+                      <span class="metadata-item-label">Last Updated</span>
+                      <span class="metadata-item-value" id="meta-updated-at">-</span>
+                    </div>
+
+                    <div class="metadata-item">
+                      <span class="metadata-item-label">Current Status</span>
+                      <div id="meta-status-badge">-</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navigation.js"></script>
+  <script src="../js/pages/ticket-detail.js"></script>
+</body>
+</html>

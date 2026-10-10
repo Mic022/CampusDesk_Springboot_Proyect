@@ -1,27 +1,28 @@
 /**
- * CampusDesk Login Page Controller
+ * CampusDesk Registration Page Controller
  * Client: TechNova Solutions
- * Manages login form submission, password visibility toggle, input validation, and redirection.
+ * Manages user registration, password strength verification, matching validation, and submission.
  */
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // If user is already authenticated, forward to dashboard
   if (Auth.isAuthenticated()) {
     window.location.href = 'dashboard.html';
     return;
   }
 
-  const form = document.getElementById('login-form');
+  const form = document.getElementById('register-form');
+  const firstNameInput = document.getElementById('first-name');
+  const lastNameInput = document.getElementById('last-name');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
+  const confirmPasswordInput = document.getElementById('confirm-password');
   const passwordToggle = document.getElementById('password-toggle');
-  const submitBtn = document.getElementById('login-submit-btn');
+  const submitBtn = document.getElementById('register-submit-btn');
   const btnText = document.getElementById('btn-text');
   const btnSpinner = document.getElementById('btn-spinner');
-  const alertBox = document.getElementById('login-alert');
+  const alertBox = document.getElementById('register-alert');
 
-  // Toggle password visibility between text and password types
   if (passwordToggle && passwordInput) {
     passwordToggle.addEventListener('click', () => {
       const isPassword = passwordInput.getAttribute('type') === 'password';
@@ -30,29 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Quick-fill buttons for evaluator convenience
-  document.getElementById('demo-admin')?.addEventListener('click', () => {
-    emailInput.value = 'admin@technova.com';
-    passwordInput.value = 'AdminPass123!';
-    clearErrors();
-  });
-
-  document.getElementById('demo-tech')?.addEventListener('click', () => {
-    emailInput.value = 'luis.gomez@technova.com';
-    passwordInput.value = 'TechPass123!';
-    clearErrors();
-  });
-
-  document.getElementById('demo-user')?.addEventListener('click', () => {
-    emailInput.value = 'ana.perez@technova.com';
-    passwordInput.value = 'UserPass123!';
-    clearErrors();
-  });
-
   function clearErrors() {
     alertBox.classList.remove('active', 'auth-alert-error', 'auth-alert-success');
-    document.getElementById('email-error').classList.remove('active');
-    document.getElementById('password-error').classList.remove('active');
+    document.querySelectorAll('.form-error-msg').forEach(el => el.classList.add('d-none'));
   }
 
   function showAlert(msg, isError = true) {
@@ -60,44 +41,62 @@ document.addEventListener('DOMContentLoaded', () => {
     alertBox.textContent = msg;
   }
 
-  // Form submission handler
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearErrors();
 
+    const firstName = firstNameInput.value.trim();
+    const lastName = lastNameInput.value.trim();
     const email = emailInput.value.trim();
     const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
 
     let hasError = false;
 
-    // Validate email format
+    if (!firstName) {
+      document.getElementById('first-name-error').classList.add('active');
+      hasError = true;
+    }
+
+    if (!lastName) {
+      document.getElementById('last-name-error').classList.add('active');
+      hasError = true;
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
       document.getElementById('email-error').classList.add('active');
       hasError = true;
     }
 
-    // Validate password
-    if (!password) {
+    // Password policy: >= 8 characters, at least 1 uppercase, 1 lowercase, 1 digit
+    const passwordPolicy = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!password || !passwordPolicy.test(password)) {
       document.getElementById('password-error').classList.add('active');
+      hasError = true;
+    }
+
+    if (password !== confirmPassword) {
+      document.getElementById('confirm-password-error').classList.add('active');
       hasError = true;
     }
 
     if (hasError) return;
 
-    // Set loading state
     submitBtn.disabled = true;
     btnText.classList.add('d-none');
     btnSpinner.classList.remove('d-none');
 
+    const fullName = `${firstName} ${lastName}`;
+
     try {
-      const user = await Auth.login(email, password);
-      Toast.success('Authentication Successful', `Welcome back, ${user.fullName}`);
+      await Auth.register(fullName, email, password);
+      Toast.success('Account Created', 'Registration successful! Please sign in with your new credentials.');
       setTimeout(() => {
-        window.location.href = 'dashboard.html';
-      }, 700);
+        window.location.href = 'login.html';
+      }, 1200);
     } catch (err) {
-      showAlert(err.message || 'Invalid credentials. Please verify your email and password.');
+      showAlert(err.message || 'Registration failed. The email address may already be in use.');
       submitBtn.disabled = false;
       btnText.classList.remove('d-none');
       btnSpinner.classList.add('d-none');

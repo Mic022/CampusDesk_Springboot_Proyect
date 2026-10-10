@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusDesk · Dashboard | TechNova Solutions</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- Initial Splash Loading Screen -->
+  <div id="splash-loader" class="splash-loader">
+    <div class="splash-logo">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>CAMPUSDESK</span>
+    </div>
+    <div class="splash-sub" data-i18n="brand_sub">Smart IT Support Management</div>
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-wrapper">
+          <div class="brand-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <span class="brand-title">CAMPUSDESK</span>
+            <span class="brand-subtitle">TechNova</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Rendered dynamically by Navigation.render() according to role -->
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn">
+          <!-- Sign out injected -->
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="main-wrapper">
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button id="menu-toggle" class="menu-toggle-btn" aria-label="Open sidebar menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="header-title-box">
+            <h1 id="page-title" data-i18n="nav_dashboard">Operations Dashboard</h1>
+            <p id="page-subtitle">Real-time incident oversight and performance metrics</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Language selector mounted by Navigation -->
+          <div id="header-i18n-container"></div>
+
+          <!-- Notification Bell mounted by Notifications.mount() -->
+          <div id="header-notifications-mount"></div>
+
+          <!-- User Profile Chip -->
+          <div class="user-profile-badge" id="header-user-profile" title="View Profile">
+            <!-- Rendered by Navigation -->
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Main Content Container -->
+      <main class="page-content" id="dashboard-content">
+        <!-- Skeleton Loading State -->
+        <div id="dashboard-loading" class="d-flex flex-column gap-20">
+          <div class="metrics-grid">
+            <div class="skeleton skeleton-metric-card"></div>
+            <div class="skeleton skeleton-metric-card"></div>
+            <div class="skeleton skeleton-metric-card"></div>
+            <div class="skeleton skeleton-metric-card"></div>
+          </div>
+          <div class="dashboard-grid-two-col">
+            <div class="skeleton skeleton-chart-box"></div>
+            <div class="skeleton skeleton-chart-box"></div>
+          </div>
+        </div>
+
+        <!-- Dynamic Role Dashboard Target -->
+        <div id="role-dashboard-view" class="d-none"></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navigation.js"></script>
+  <script src="../js/pages/dashboard.js"></script>
+</body>
+</html>

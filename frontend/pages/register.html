@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusDesk · Register Account | TechNova Solutions</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="auth-page">
+
+  <!-- Floating Language Switcher -->
+  <div class="auth-lang-floating" id="register-lang-container"></div>
+
+  <div class="auth-split-container">
+    <!-- Left Hero Branding Panel -->
+    <div class="auth-hero-panel">
+      <div class="auth-brand">
+        <div class="auth-brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="auth-brand-name">CAMPUSDESK</div>
+          <div class="auth-company-tag">TechNova Solutions</div>
+        </div>
+      </div>
+
+      <div class="auth-hero-content">
+        <h2 class="auth-hero-title">Join TechNova Solutions Support Ecosystem</h2>
+        <p class="auth-hero-desc">
+          Create your corporate account to submit IT requests, track real-time resolution progress, and coordinate directly with designated support technicians.
+        </p>
+
+        <div class="auth-feature-list">
+          <div class="auth-feature-item">
+            <span class="auth-feature-check">✓</span>
+            <span>Self-service incident intake with priority tagging</span>
+          </div>
+          <div class="auth-feature-item">
+            <span class="auth-feature-check">✓</span>
+            <span>Automated status notifications and comment discussions</span>
+          </div>
+          <div class="auth-feature-item">
+            <span class="auth-feature-check">✓</span>
+            <span>Enterprise-grade security and authentication</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-hero-footer">
+        &copy; 2026 TechNova Solutions · Authorized Workforce Registration
+      </div>
+    </div>
+
+    <!-- Right Interactive Register Panel -->
+    <div class="auth-form-panel">
+      <div class="auth-card-wide">
+        <div class="auth-header">
+          <h1 class="auth-title" data-i18n="register_title">Create account</h1>
+          <p class="auth-subtitle" data-i18n="register_sub">Register your corporate profile for IT support services</p>
+        </div>
+
+        <!-- Security policy note -->
+        <div class="security-notice-box">
+          <div class="security-notice-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="security-notice-text" data-i18n="security_notice">
+            <strong>Security Notice:</strong> Administrative and technician privileges are provisioned exclusively through authorized IT governance channels.
+          </div>
+        </div>
+
+        <!-- Feedback Alert Container -->
+        <div id="register-alert" class="auth-alert-box"></div>
+
+        <form id="register-form" novalidate>
+          <div class="dashboard-grid-even">
+            <div class="form-group">
+              <label for="first-name" class="form-label" data-i18n="first_name_label">First Name</label>
+              <input type="text" id="first-name" class="form-control" placeholder="Ana" required>
+              <div id="first-name-error" class="form-error-msg">First name is required.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="last-name" class="form-label" data-i18n="last_name_label">Last Name</label>
+              <input type="text" id="last-name" class="form-control" placeholder="Pérez" required>
+              <div id="last-name-error" class="form-error-msg">Last name is required.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label" data-i18n="email_label">Corporate Email</label>
+            <input type="email" id="email" class="form-control" placeholder="ana.perez@technova.com" required autocomplete="email">
+            <div id="email-error" class="form-error-msg">Please enter a valid corporate email.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label" data-i18n="password_label">Password</label>
+            <div class="password-input-wrapper">
+              <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="new-password">
+              <button type="button" id="password-toggle" class="password-toggle-btn" aria-label="Toggle password visibility">Show</button>
+            </div>
+            <div class="form-hint">At least 8 characters, with 1 uppercase, 1 lowercase, and 1 number.</div>
+            <div id="password-error" class="form-error-msg">Password must meet security requirements.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password" class="form-label" data-i18n="confirm_password_label">Confirm Password</label>
+            <input type="password" id="confirm-password" class="form-control" placeholder="••••••••" required autocomplete="new-password">
+            <div id="confirm-password-error" class="form-error-msg">Passwords do not match.</div>
+          </div>
+
+          <button type="submit" id="register-submit-btn" class="btn btn-primary btn-lg w-100">
+            <span id="btn-text" data-i18n="create_account">Create Account</span>
+            <span id="btn-spinner" class="spinner btn-spinner-icon d-none"></span>
+          </button>
+        </form>
+
+        <div class="auth-footer-prompt">
+          <span data-i18n="already_have_account">Already have an account?</span> <a href="login.html" data-i18n="sign_in">Sign in here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/pages/register.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('register-lang-container');
+      if (container && typeof I18n !== 'undefined') {
+        I18n.mountSelector(container);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusDesk · Administration Console | TechNova Solutions</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-wrapper">
+          <div class="brand-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <span class="brand-title">CAMPUSDESK</span>
+            <span class="brand-subtitle">TechNova</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+
+      <div class="sidebar-footer">
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-left">
+          <button id="menu-toggle" class="menu-toggle-btn" aria-label="Open sidebar menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="header-title-box">
+            <h1 data-i18n="nav_admin">Administration Center</h1>
+            <p>Operational workforce oversight, technician capacity, and user directory</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
+          <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <!-- Admin Navigation Tabs -->
+        <div class="admin-tabs-nav">
+          <button class="admin-tab-btn active" data-tab="tab-overview">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+            System Overview
+          </button>
+          <button class="admin-tab-btn" data-tab="tab-technicians">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Technicians Roster
+          </button>
+          <button class="admin-tab-btn" data-tab="tab-users">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            User Directory
+          </button>
+        </div>
+
+        <!-- Tab 1: System Overview -->
+        <div class="admin-tab-content active" id="tab-overview">
+          <div class="metrics-grid" id="admin-summary-grid">
+            <!-- Summary cards injected -->
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Unassigned Incidents Awaiting Triage</h3>
+              <a href="tickets.html?status=OPEN" class="btn btn-secondary btn-sm">View Intake Desk</a>
+            </div>
+            <div class="card-body card-body-flush">
+              <div class="table-responsive">
+                <table class="data-table responsive-cards-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>Priority</th>
+                      <th>Submitted On</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="unassigned-table-body">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Technicians Roster -->
+        <div class="admin-tab-content" id="tab-technicians">
+          <div class="card-header card-body-flush section-header-flush">
+            <div>
+              <h3 class="card-title section-header-title">Active Field & Support Technicians</h3>
+              <p class="activity-meta">Monitor individual workloads and dispatch pending tickets</p>
+            </div>
+          </div>
+          <div class="technicians-grid" id="technicians-cards-container">
+            <!-- Technician cards injected -->
+          </div>
+        </div>
+
+        <!-- Tab 3: Users Directory -->
+        <div class="admin-tab-content" id="tab-users">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title" id="users-count-badge">Corporate User Directory</h3>
+              <span class="card-header-badge">Protected accounts</span>
+            </div>
+            <div class="card-body card-body-flush">
+              <div class="table-responsive">
+                <table class="data-table responsive-cards-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Full Name</th>
+                      <th>Corporate Email</th>
+                      <th>Role</th>
+                      <th>Account Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="users-table-body">
+                    <!-- Users injected -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navigation.js"></script>
+  <script src="../js/pages/administration.js"></script>
+</body>
+</html>

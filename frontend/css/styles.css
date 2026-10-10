@@ -1,3 +1,12 @@
-/* CAMPUSDESK · Estilos compartidos por las 5 pantallas
-   Dueño: Persona 3
-   Sin frameworks (no Bootstrap, no Tailwind). */
+/**
+ * CampusDesk Combined Stylesheet
+ * Imports all modular CSS stylesheets for CampusDesk IT Support platform.
+ */
+@import url('main.css');
+@import url('auth.css');
+@import url('dashboard.css');
+@import url('tickets.css');
+@import url('ticket-detail.css');
+@import url('administration.css');
+@import url('responsive.css');
+@import url('landing.css');

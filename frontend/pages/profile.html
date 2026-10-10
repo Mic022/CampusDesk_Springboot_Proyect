@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusDesk · User Profile | TechNova Solutions</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-wrapper">
+          <div class="brand-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <span class="brand-title">CAMPUSDESK</span>
+            <span class="brand-subtitle">TechNova</span>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <a href="#" class="nav-link text-critical" id="sidebar-logout-btn"></a>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-left">
+          <button id="menu-toggle" class="menu-toggle-btn" aria-label="Open sidebar menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="header-title-box">
+            <h1 data-i18n="nav_profile">Account Profile</h1>
+            <p>Corporate identity and system authorization overview</p>
+          </div>
+        </div>
+        <div class="header-right">
+          <!-- Mount points for i18n & notifications -->
+          <div id="header-i18n-container"></div>
+          <div id="header-notifications-mount"></div>
+
+          <div class="user-profile-badge" id="header-user-profile" title="View Profile"></div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="card profile-card">
+          <div class="card-header">
+            <h3 class="card-title">Corporate User Credentials</h3>
+            <span class="badge badge-status-resolved"><span class="badge-dot"></span>ACTIVE ACCOUNT</span>
+          </div>
+          <div class="card-body">
+            <!-- Profile avatar header -->
+            <div class="profile-header">
+              <div id="profile-avatar-large" class="profile-avatar-large">
+                UN
+              </div>
+              <div>
+                <h2 id="profile-name-header" class="profile-name">Loading User...</h2>
+                <span id="profile-role-badge" class="badge profile-role-badge">ROLE</span>
+              </div>
+            </div>
+
+            <!-- Profile Info Metadata List -->
+            <div class="metadata-list">
+              <div class="profile-grid-2">
+                <div class="metadata-item">
+                  <span class="metadata-item-label">First Name</span>
+                  <span class="metadata-item-value" id="profile-first-name">-</span>
+                </div>
+                <div class="metadata-item">
+                  <span class="metadata-item-label">Last Name</span>
+                  <span class="metadata-item-value" id="profile-last-name">-</span>
+                </div>
+              </div>
+
+              <div class="metadata-item">
+                <span class="metadata-item-label">Corporate Email Address</span>
+                <span class="metadata-item-value" id="profile-email">-</span>
+              </div>
+
+              <div class="metadata-item">
+                <span class="metadata-item-label">System Security Role</span>
+                <span class="metadata-item-value" id="profile-role-text">-</span>
+              </div>
+
+              <div class="metadata-item">
+                <span class="metadata-item-label">Account Verification Status</span>
+                <div class="profile-status-wrapper">
+                  <span class="badge badge-status-resolved"><span class="badge-dot"></span>Active Corporate Member</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-footer">
+              <span class="profile-iam-note">TechNova Solutions IAM System</span>
+              <button id="profile-logout-btn" class="btn btn-secondary btn-sm text-critical">
+                Sign Out from CampusDesk
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/navigation.js"></script>
+  <script src="../js/pages/profile.js"></script>
+</body>
+</html>
