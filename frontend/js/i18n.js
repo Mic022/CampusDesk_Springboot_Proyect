@@ -86,7 +86,15 @@ const I18n = {
       all_priorities: 'All Priorities',
       all_categories: 'All Categories',
       submit_request: 'Submit Request',
-      cancel: 'Cancel'
+      cancel: 'Cancel',
+      first_name_error: 'First name is required.',
+      last_name_error: 'Last name is required.',
+      email_error: 'Please enter a valid corporate email.',
+      password_hint: 'At least 8 characters, with 1 uppercase, 1 lowercase, and 1 number.',
+      password_error: 'Password must meet security requirements.',
+      password_required_error: 'Password is required.',
+      confirm_password_error: 'Passwords do not match.',
+      registration_success: 'Account created successfully! Redirecting to sign in...'
     },
     es: {
       brand_sub: 'Gestión Inteligente de Soporte TI',
@@ -156,7 +164,15 @@ const I18n = {
       all_priorities: 'Todas las Prioridades',
       all_categories: 'Todas las Categorías',
       submit_request: 'Enviar Solicitud',
-      cancel: 'Cancelar'
+      cancel: 'Cancelar',
+      first_name_error: 'El nombre es obligatorio.',
+      last_name_error: 'El apellido es obligatorio.',
+      email_error: 'Ingresa un correo corporativo válido.',
+      password_hint: 'Al menos 8 caracteres, con 1 mayúscula, 1 minúscula y 1 número.',
+      password_error: 'La contraseña debe cumplir los requisitos de seguridad.',
+      password_required_error: 'La contraseña es obligatoria.',
+      confirm_password_error: 'Las contraseñas no coinciden.',
+      registration_success: '¡Cuenta creada exitosamente! Redirigiendo a iniciar sesión...'
     },
     pt: {
       brand_sub: 'Gestão Inteligente de Suporte de TI',
@@ -226,7 +242,15 @@ const I18n = {
       all_priorities: 'Todas as Prioridades',
       all_categories: 'Todas as Categorias',
       submit_request: 'Enviar Chamado',
-      cancel: 'Cancelar'
+      cancel: 'Cancelar',
+      first_name_error: 'O primeiro nome é obrigatório.',
+      last_name_error: 'O sobrenome é obrigatório.',
+      email_error: 'Insira um e-mail corporativo válido.',
+      password_hint: 'Pelo menos 8 caracteres, com 1 maiúscula, 1 minúscula e 1 número.',
+      password_error: 'A senha deve atender aos requisitos de segurança.',
+      password_required_error: 'A senha é obrigatória.',
+      confirm_password_error: 'As senhas não coincidem.',
+      registration_success: 'Conta criada com sucesso! Redirecionando para login...'
     },
     fr: {
       brand_sub: 'Gestion Intelligente du Support Informatique',
@@ -296,7 +320,15 @@ const I18n = {
       all_priorities: 'Toutes les Priorités',
       all_categories: 'Toutes les Catégories',
       submit_request: 'Soumettre Ticket',
-      cancel: 'Annuler'
+      cancel: 'Annuler',
+      first_name_error: 'Le prénom est obligatoire.',
+      last_name_error: 'Le nom de famille est obligatoire.',
+      email_error: 'Veuillez saisir un e-mail professionnel valide.',
+      password_hint: 'Au moins 8 caractères, avec 1 majuscule, 1 minuscule et 1 chiffre.',
+      password_error: 'Le mot de passe doit respecter les critères de sécurité.',
+      password_required_error: 'Le mot de passe est obligatoire.',
+      confirm_password_error: 'Les mots de passe ne correspondent pas.',
+      registration_success: 'Compte créé avec succès ! Redirection vers la connexion...'
     },
     de: {
       brand_sub: 'Intelligentes IT-Support-Management',
@@ -366,7 +398,15 @@ const I18n = {
       all_priorities: 'Alle Prioritäten',
       all_categories: 'Alle Kategorien',
       submit_request: 'Ticket Senden',
-      cancel: 'Abbrechen'
+      cancel: 'Abbrechen',
+      first_name_error: 'Vorname ist erforderlich.',
+      last_name_error: 'Nachname ist erforderlich.',
+      email_error: 'Bitte geben Sie eine gültige Unternehmens-E-Mail ein.',
+      password_hint: 'Mindestens 8 Zeichen, mit 1 Großbuchstaben, 1 Kleinbuchstaben und 1 Zahl.',
+      password_error: 'Das Passwort muss die Sicherheitsanforderungen erfüllen.',
+      password_required_error: 'Passwort ist erforderlich.',
+      confirm_password_error: 'Passwörter stimmen nicht überein.',
+      registration_success: 'Konto erfolgreich erstellt! Weiterleitung zur Anmeldung...'
     }
   },
 

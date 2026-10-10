@@ -1,7 +1,7 @@
 /**
  * CampusDesk Login Page Controller
  * Client: TechNova Solutions
- * Manages login form submission, password visibility toggle, input validation, and redirection.
+ * Manages login form submission, demo quick-access credentials, input validation, and redirection.
  */
 'use strict';
 
@@ -20,6 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnText = document.getElementById('btn-text');
   const btnSpinner = document.getElementById('btn-spinner');
   const alertBox = document.getElementById('login-alert');
+
+  // If redirected from registration, pre-fill newly registered email
+  const prefilledEmail = sessionStorage.getItem('campusdesk_registered_email');
+  if (prefilledEmail && emailInput) {
+    emailInput.value = prefilledEmail;
+    sessionStorage.removeItem('campusdesk_registered_email');
+    if (passwordInput) {
+      passwordInput.focus();
+    }
+  }
 
   // Toggle password visibility between text and password types
   if (passwordToggle && passwordInput) {
@@ -50,9 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function clearErrors() {
-    alertBox.classList.remove('active', 'auth-alert-error', 'auth-alert-success');
-    document.getElementById('email-error').classList.remove('active');
-    document.getElementById('password-error').classList.remove('active');
+    alertBox.className = 'auth-alert-box';
+    alertBox.textContent = '';
+    document.getElementById('email-error')?.classList.remove('active');
+    document.getElementById('password-error')?.classList.remove('active');
   }
 
   function showAlert(msg, isError = true) {
@@ -73,13 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
-      document.getElementById('email-error').classList.add('active');
+      document.getElementById('email-error')?.classList.add('active');
       hasError = true;
     }
 
     // Validate password
     if (!password) {
-      document.getElementById('password-error').classList.add('active');
+      document.getElementById('password-error')?.classList.add('active');
       hasError = true;
     }
 
@@ -92,7 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const user = await Auth.login(email, password);
-      Toast.success('Authentication Successful', `Welcome back, ${user.fullName}`);
+      if (typeof Toast !== 'undefined') {
+        Toast.success('Authentication Successful', `Welcome back, ${user.fullName}`);
+      }
       setTimeout(() => {
         window.location.href = 'dashboard.html';
       }, 700);
@@ -103,4 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btnSpinner.classList.add('d-none');
     }
   });
+
+  // Ensure current language translation is applied
+  if (typeof I18n !== 'undefined') {
+    I18n.translatePage();
+  }
 });

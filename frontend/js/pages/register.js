@@ -1,11 +1,12 @@
 /**
  * CampusDesk Registration Page Controller
  * Client: TechNova Solutions
- * Manages user registration, password strength verification, matching validation, and submission.
+ * Manages user registration, form input verification, security policies, and redirection.
  */
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
+  // If already logged in, redirect to dashboard
   if (Auth.isAuthenticated()) {
     window.location.href = 'dashboard.html';
     return;
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSpinner = document.getElementById('btn-spinner');
   const alertBox = document.getElementById('register-alert');
 
+  // Toggle password visibility
   if (passwordToggle && passwordInput) {
     passwordToggle.addEventListener('click', () => {
       const isPassword = passwordInput.getAttribute('type') === 'password';
@@ -32,8 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function clearErrors() {
-    alertBox.classList.remove('active', 'auth-alert-error', 'auth-alert-success');
-    document.querySelectorAll('.form-error-msg').forEach(el => el.classList.add('d-none'));
+    alertBox.className = 'auth-alert-box';
+    alertBox.textContent = '';
+    document.querySelectorAll('.form-error-msg').forEach(el => {
+      el.classList.remove('active');
+    });
   }
 
   function showAlert(msg, isError = true) {
@@ -69,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hasError = true;
     }
 
-    // Password policy: >= 8 characters, at least 1 uppercase, 1 lowercase, 1 digit
+    // Password policy: At least 8 characters, with 1 uppercase, 1 lowercase, and 1 number
     const passwordPolicy = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!password || !passwordPolicy.test(password)) {
       document.getElementById('password-error').classList.add('active');
@@ -81,7 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
       hasError = true;
     }
 
-    if (hasError) return;
+    if (hasError) {
+      showAlert('Please check and complete all required fields according to the indicated criteria.');
+      return;
+    }
 
     submitBtn.disabled = true;
     btnText.classList.add('d-none');
@@ -91,10 +99,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       await Auth.register(fullName, email, password);
-      Toast.success('Account Created', 'Registration successful! Please sign in with your new credentials.');
+
+      showAlert('Account created successfully! Redirecting to sign in...', false);
+      if (typeof Toast !== 'undefined') {
+        Toast.success('Account Created', 'Registration successful! Please sign in with your new credentials.');
+      }
+
+      // Store registered email for auto-filling on login page
+      sessionStorage.setItem('campusdesk_registered_email', email);
+
       setTimeout(() => {
         window.location.href = 'login.html';
       }, 1200);
+
     } catch (err) {
       showAlert(err.message || 'Registration failed. The email address may already be in use.');
       submitBtn.disabled = false;
@@ -102,4 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btnSpinner.classList.add('d-none');
     }
   });
+
+  // Ensure current language translation is applied
+  if (typeof I18n !== 'undefined') {
+    I18n.translatePage();
+  }
 });
