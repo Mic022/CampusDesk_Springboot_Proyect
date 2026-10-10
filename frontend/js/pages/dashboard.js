@@ -504,7 +504,7 @@ function renderSvgPriorityBars(tickets) {
           <span>LOW</span> <span>${low}</span>
         </div>
         <div class="chart-bar-track">
-          <div class="chart-bar-fill" style="width: ${(low / max) * 100}%; background-color: var(--priority-low);"></div>
+          <div class="chart-bar-fill bg-priority-low" style="width: ${(low / max) * 100}%;"></div>
         </div>
       </div>
 
@@ -513,7 +513,7 @@ function renderSvgPriorityBars(tickets) {
           <span>MEDIUM</span> <span>${med}</span>
         </div>
         <div class="chart-bar-track">
-          <div class="chart-bar-fill" style="width: ${(med / max) * 100}%; background-color: var(--priority-medium);"></div>
+          <div class="chart-bar-fill bg-priority-medium" style="width: ${(med / max) * 100}%;"></div>
         </div>
       </div>
 
@@ -522,7 +522,7 @@ function renderSvgPriorityBars(tickets) {
           <span>HIGH</span> <span>${high}</span>
         </div>
         <div class="chart-bar-track">
-          <div class="chart-bar-fill" style="width: ${(high / max) * 100}%; background-color: var(--priority-high);"></div>
+          <div class="chart-bar-fill bg-priority-high" style="width: ${(high / max) * 100}%;"></div>
         </div>
       </div>
 
@@ -531,7 +531,7 @@ function renderSvgPriorityBars(tickets) {
           <span>CRITICAL</span> <span>${crit}</span>
         </div>
         <div class="chart-bar-track">
-          <div class="chart-bar-fill" style="width: ${(crit / max) * 100}%; background-color: var(--priority-critical);"></div>
+          <div class="chart-bar-fill bg-priority-critical" style="width: ${(crit / max) * 100}%;"></div>
         </div>
       </div>
     </div>

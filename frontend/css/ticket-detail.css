@@ -288,3 +288,10 @@
   color: #ffffff;
 }
 
+/* Technician Resolve Button */
+.btn-resolve-ticket {
+  background-color: var(--status-resolved);
+  color: #ffffff;
+}
+
+

@@ -295,7 +295,7 @@ function renderRoleActions(ticket) {
       actionsHtml += `
         <div class="d-flex flex-column gap-12">
           <p class="activity-meta">Mark this ticket as resolved and await requester verification.</p>
-          <button id="btn-resolve-ticket" class="btn btn-primary w-100" style="background-color: var(--status-resolved);">
+          <button id="btn-resolve-ticket" class="btn btn-primary btn-resolve-ticket w-100">
             Mark as Resolved (RESOLVED)
           </button>
         </div>
@@ -357,7 +357,7 @@ async function openAssignmentModal() {
     `).join('');
 
     const modalContent = `
-      <p class="activity-meta" style="margin-bottom: 16px;">
+      <p class="activity-meta mb-16">
         Select an authorized technician to take ownership of incident <strong>#TK-${String(currentTicket.id).padStart(4, '0')}</strong>:
       </p>
       <div class="form-group">

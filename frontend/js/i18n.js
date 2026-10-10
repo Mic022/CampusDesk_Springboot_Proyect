@@ -413,13 +413,13 @@ const I18n = {
       <button class="language-toggle-btn" id="lang-toggle-btn" aria-label="Select language">
         <span>${currentMeta.flag}</span>
         <span id="lang-current-code">${currentMeta.code.toUpperCase()}</span>
-        <span style="font-size: 0.68rem; margin-left: 2px;">▼</span>
+        <span class="lang-arrow">▼</span>
       </button>
       <div class="language-dropdown-menu" id="lang-dropdown-menu">
         ${this.languages.map(l => `
           <button class="language-dropdown-item ${l.code === this.currentLang ? 'active' : ''}" data-code="${l.code}">
             <span>${l.flag} ${l.label}</span>
-            ${l.code === this.currentLang ? '<span style="font-weight: 800;">✓</span>' : ''}
+            ${l.code === this.currentLang ? '<span class="lang-check">✓</span>' : ''}
           </button>
         `).join('')}
       </div>

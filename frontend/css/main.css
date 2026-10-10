@@ -343,6 +343,15 @@ a:hover {
   font-weight: 700;
 }
 
+.lang-arrow {
+  font-size: 0.68rem;
+  margin-left: 2px;
+}
+
+.lang-check {
+  font-weight: 800;
+}
+
 /* Notifications Bell & Dropdown */
 .notifications-wrapper {
   position: relative;
@@ -1284,6 +1293,7 @@ a:hover {
 /* Visibility & Spacing Utilities */
 .d-none { display: none !important; }
 .p-24 { padding: 24px !important; }
+.mb-16 { margin-bottom: 16px !important; }
 .mb-24 { margin-bottom: 24px !important; }
 .w-0 { width: 0% !important; }
 

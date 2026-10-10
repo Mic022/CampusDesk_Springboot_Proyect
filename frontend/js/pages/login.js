@@ -33,19 +33,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Quick-fill buttons for evaluator convenience
   document.getElementById('demo-admin')?.addEventListener('click', () => {
     emailInput.value = 'admin@technova.com';
-    passwordInput.value = 'AdminPass123!';
+    passwordInput.value = 'Admin12345!';
     clearErrors();
   });
 
   document.getElementById('demo-tech')?.addEventListener('click', () => {
-    emailInput.value = 'luis.gomez@technova.com';
-    passwordInput.value = 'TechPass123!';
+    emailInput.value = 'tech1@technova.com';
+    passwordInput.value = 'Tech12345!';
     clearErrors();
   });
 
   document.getElementById('demo-user')?.addEventListener('click', () => {
-    emailInput.value = 'ana.perez@technova.com';
-    passwordInput.value = 'UserPass123!';
+    emailInput.value = 'ana@technova.com';
+    passwordInput.value = 'User12345';
     clearErrors();
   });
 
